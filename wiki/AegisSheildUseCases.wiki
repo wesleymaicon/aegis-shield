@@ -7,19 +7,13 @@ This page contains the use cases for the application. The database tables will h
 = Use Cases =
 ===1. Add a new user account.===
 The user can add a new account and password to the database. Required information is:
-  *account user name
-  *account password
-  *account description
-  *account name
+  * account user name
+  * account password
+  * account description
+  * account name
 
 ===2. Edit user account information.===
 The user can edit information about an account. The editable information is:
-  *account name
-  *account description
-  *account password
-
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * account name
+  * account description
+  * account password
