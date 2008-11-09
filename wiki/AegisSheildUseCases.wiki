@@ -1,0 +1,13 @@
+*Aegis Shield Use Cases*
+
+= Introduction =
+This page contains the use cases for the application.
+
+= Details =
+1. Add a new user account.
+The user can add a new account and password to the database.
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
