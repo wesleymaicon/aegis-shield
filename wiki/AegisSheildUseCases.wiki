@@ -1,4 +1,4 @@
-#labels aegis_shield,use_cases
+#labels Phase-Requirements,Use-Cases,Aegis-Shield
 *Aegis Shield Use Cases*
 
 = Introduction =
@@ -48,4 +48,3 @@ The user can enter the application master password the first time the Aegis Shie
 
 ===11. Change master password.===
 Can be done at any moment from the application menu.
-
