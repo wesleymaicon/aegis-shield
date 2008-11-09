@@ -1,4 +1,4 @@
-#labels aegis_shield,functional_requirements
+#labels Phase-Requirements,Functional-Requirements,Aegis-Shield
 *Functional requirements for Aegis Shield password manager.*
 
 = Introduction =
