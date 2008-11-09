@@ -1,11 +1,23 @@
+#labels aegis_shield,use_cases
 *Aegis Shield Use Cases*
 
 = Introduction =
-This page contains the use cases for the application.
+This page contains the use cases for the application. The database tables will have a technical id.
 
-= Details =
-1. Add a new user account.
-The user can add a new account and password to the database.
+= Use Cases =
+===1. Add a new user account.===
+The user can add a new account and password to the database. Required information is:
+  *account user name
+  *account password
+  *account description
+  *account name
+
+===2. Edit user account information.===
+The user can edit information about an account. The editable information is:
+  *account name
+  *account description
+  *account password
+
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
