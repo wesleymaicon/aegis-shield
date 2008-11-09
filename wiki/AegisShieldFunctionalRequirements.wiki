@@ -17,3 +17,4 @@ Aegis Shield is a simple password manager for the Google Android mobile platform
   * for each user account a scheduler can be set to remind the user to change the password for the account at a certain time interval - must
   * has integration with generally used accounts such as yahoo, google, facebook. etc. - nice to have
   * has a random password generator and a password strength measuring algorithm - must
+  * has a nice and catchy user interface design - nice to have
