@@ -2,4 +2,7 @@
 <resources>
     <string name="hello">Aegis Shield</string>
     <string name="app_name">Aegis Shield</string>
+    <string name="strength_button_text">Password strength</string>
+    <string name="verify_password_text">Verify password strength</string>
+    <string name="back_button_text">Back</string>
 </resources>
