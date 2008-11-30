@@ -2,7 +2,7 @@
  * Nov 27, 2008
  * Copyright (C) 2008 Rares Barbantan.
  */
-package com.googlecode.aegisshield.activity;
+package com.googlecode.aegisshield.password;
 
 import android.app.Activity;
 import android.os.Bundle;

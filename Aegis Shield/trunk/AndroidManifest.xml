@@ -11,7 +11,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.VerifyPassword" android:label="@string/verify_password_text">
+        <activity android:name=".password.VerifyPassword" android:label="@string/verify_password_text">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

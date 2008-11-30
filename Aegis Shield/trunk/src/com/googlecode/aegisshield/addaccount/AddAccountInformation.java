@@ -2,7 +2,7 @@
  * Nov 23, 2008
  * Copyright (C) 2007 Mihai Campean.
  */
-package com.googlecode.aegisshield.activity;
+package com.googlecode.aegisshield.addaccount;
 
 import com.googlecode.aegisshield.R;
 

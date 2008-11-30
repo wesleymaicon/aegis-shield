@@ -1,6 +1,6 @@
 package com.googlecode.aegisshield;
 
-import com.googlecode.aegisshield.activity.VerifyPassword;
+import com.googlecode.aegisshield.password.VerifyPassword;
 
 import android.app.Activity;
 import android.content.Intent;
