@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.googlecode.aegisshield.R;
-import com.googlecode.aegisshield.utils.PasswordStrength;
+import com.googlecode.aegisshield.password.utils.PasswordStrength;
 
 /**
  * 	Activity for verifying a password's strength.
