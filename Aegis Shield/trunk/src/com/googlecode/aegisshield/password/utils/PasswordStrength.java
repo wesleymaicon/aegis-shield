@@ -18,6 +18,9 @@ public class PasswordStrength {
 	
 	static {
 		rules.add(new PasswordLengthRule());
+		rules.add(new LettersRule());
+		rules.add(new DigitsRule());
+		rules.add(new ExtraCharsRule());
 	}
 	
 	/**
@@ -27,9 +30,12 @@ public class PasswordStrength {
 	 */
 	public static int evaluate(String password) {
 		int result = 0;
+		double weights = 0;
+		
 		for(Rule rule: rules) {
 			result += rule.getWeight() * rule.evaluate(password);
+			weights += rule.getWeight();
 		}
-		return result/rules.size();
+		return (int) ((weights == 0) ? 0 : result/weights);
 	}
 }

@@ -6,6 +6,7 @@ package com.googlecode.aegisshield.password;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -40,7 +41,7 @@ public class VerifyPassword extends Activity {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if(event.getAction() == KeyEvent.ACTION_UP) {
 					int strength = PasswordStrength.evaluate(textBox.getText().toString());
-					
+					Log.d("strength activity", textBox.getText().toString()+ " ~ " + strength);
 					if(strength >= 8) {
 						iw.setImageResource(R.drawable.check);
 		                iw.setAdjustViewBounds(true);

@@ -13,10 +13,6 @@ package com.googlecode.aegisshield.password.utils;
  */
 public class PasswordLengthRule extends Rule {
 
-	public PasswordLengthRule()	{
-		setWeight(1);
-	}
-	
 	@Override
 	public int evaluate(String password) {
 		int result = 1;
