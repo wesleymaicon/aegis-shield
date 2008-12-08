@@ -9,6 +9,7 @@ import com.googlecode.aegisshield.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 /**
@@ -28,7 +29,7 @@ public class AddAccountInformation extends Activity {
 		setContentView(R.layout.add_account);
 		
 		Button addAccount = (Button) findViewById(R.id.add_account_button);
-		addAccount.setOnClickListener(new View.OnClickListener() {
+		addAccount.setOnClickListener(new OnClickListener() {
 			/**
 			 * 	Add the account information in the the database when the "add account" button
 			 * is pressed.

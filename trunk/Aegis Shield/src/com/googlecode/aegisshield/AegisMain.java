@@ -1,5 +1,6 @@
 package com.googlecode.aegisshield;
 
+import com.googlecode.aegisshield.addaccount.AddAccountInformation;
 import com.googlecode.aegisshield.password.GeneratePassword;
 import com.googlecode.aegisshield.password.VerifyPassword;
 
@@ -20,7 +21,7 @@ public class AegisMain extends Activity {
         final Button goToStrength = (Button) findViewById(R.id.strength_button);
         goToStrength.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	final Intent myIntent = new Intent(AegisMain.this,VerifyPassword.class);
+            	final Intent myIntent = new Intent(AegisMain.this, VerifyPassword.class);
             	startActivity(myIntent);    
             }
         });
@@ -31,6 +32,15 @@ public class AegisMain extends Activity {
             	final Intent myIntent = new Intent(AegisMain.this, GeneratePassword.class);
             	startActivity(myIntent);    
             }
+        });
+        
+        final Button goToAddAccount = (Button) findViewById(R.id.add_account_button);
+        goToAddAccount.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final Intent myIntent = new Intent(AegisMain.this, AddAccountInformation.class);
+				startActivity(myIntent);
+			}
         });
     }
 }
