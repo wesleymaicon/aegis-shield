@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Aegis Shield</string>
-    <string name="app_name">Aegis Shield</string>
-    <string name="strength_button_text">Password strength</string>
-    <string name="verify_password_text">Verify password strength</string>
-    <string name="back_button_text">Back</string>
-<string name="genpw_button_text">Generate password</string>
-<string name="generate_password_text">Generate Password</string>
-<string name="add_account_text"> add new account </string>
+    <string name="hello"> Aegis Shield </string>
+    <string name="app_name"> Aegis Shield </string>
+    <string name="strength_button_text"> password strength </string>
+    <string name="verify_password_text"> verify password strength </string>
+    <string name="back_button_text"> back </string>
+    <string name="genpw_button_text"> generate password </string>
+    <string name="generate_password_text"> generate password </string>
+    <string name="add_account_text"> add new account </string>
     <string name="add_account_button_text"> new account </string>
     <string name="account_name_text"> account name </string>
     <string name="account_user_text"> account user </string>
