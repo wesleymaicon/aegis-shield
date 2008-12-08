@@ -1,5 +1,6 @@
 package com.googlecode.aegisshield;
 
+import com.googlecode.aegisshield.password.GeneratePassword;
 import com.googlecode.aegisshield.password.VerifyPassword;
 
 import android.app.Activity;
@@ -15,10 +16,19 @@ public class AegisMain extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Button goToStrength = (Button) findViewById(R.id.strength_button);
+        
+        final Button goToStrength = (Button) findViewById(R.id.strength_button);
         goToStrength.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	Intent myIntent = new Intent(AegisMain.this,VerifyPassword.class);
+            	final Intent myIntent = new Intent(AegisMain.this,VerifyPassword.class);
+            	startActivity(myIntent);    
+            }
+        });
+        
+        final Button goToGeneratePassword = (Button) findViewById(R.id.genpw_button);
+        goToGeneratePassword.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	final Intent myIntent = new Intent(AegisMain.this, GeneratePassword.class);
             	startActivity(myIntent);    
             }
         });
