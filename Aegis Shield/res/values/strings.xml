@@ -10,4 +10,7 @@
 <string name="add_account_text"> add new account </string>
     <string name="add_account_button_text"> new account </string>
     <string name="account_name_text"> account name </string>
+    <string name="account_user_text"> account user </string>
+    <string name="account_password_text"> account password </string>
+    <string name="account_description_text"> account description </string>
 </resources>
