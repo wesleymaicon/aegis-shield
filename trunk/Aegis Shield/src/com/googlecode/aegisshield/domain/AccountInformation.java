@@ -1,6 +1,6 @@
 /*
  * Nov 23, 2008
- * Copyright (C) 2007 Mihai Campean.
+ * Copyright (C) 2008 Mihai Campean.
  */
 package com.googlecode.aegisshield.domain;
 
