@@ -8,12 +8,16 @@ package com.googlecode.aegisshield.domain;
 import com.googlecode.aegisshield.db.AegisDatabaseHelper;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
 
 /**
  * 	Content provider for the AccountInformation data type.
@@ -73,8 +77,25 @@ public class AccountInformationProvider extends ContentProvider {
 	 */
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		
+		switch(uriMatcher.match(uri)) {
+			case ALLROWS:
+				count = aegisDb.delete(AegisDatabaseHelper.DB_TABLE_ACCT_INFO, selection, selectionArgs);
+				break;
+			case SINGLE_ROW:
+				//TODO refactor this repetitive code into a private method
+				String segment = uri.getPathSegments().get(1);
+				String where = !TextUtils.isEmpty(selection) ? "AND (" + selection + ")" : "";
+				count = aegisDb.delete(AegisDatabaseHelper.DB_TABLE_ACCT_INFO, 
+						KEY_ID + "=" + segment + where,
+						selectionArgs);
+				break;
+			default:
+				throw new IllegalArgumentException("Unsupported URI: " + uri);
+		}
+		
+		return count;
 	}
 
 	/**
@@ -99,8 +120,14 @@ public class AccountInformationProvider extends ContentProvider {
 	 */
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		// TODO Auto-generated method stub
-		return null;
+		long rowId = aegisDb.insert(AegisDatabaseHelper.DB_TABLE_ACCT_INFO, "aegis", values);
+		if (rowId > 0) {
+			Uri insertUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
+			getContext().getContentResolver().notifyChange(uri, null);
+			return insertUri;
+		} else {
+			throw new SQLException("Failed to insert row into: " + uri);
+		}
 	}
 
 	/**
@@ -122,8 +149,19 @@ public class AccountInformationProvider extends ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
-		// TODO Auto-generated method stub
-		return null;
+		Cursor cursor = null;
+		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		
+		if (SINGLE_ROW == uriMatcher.match(uri)) {
+			queryBuilder.appendWhere(KEY_ID + "=" + uri.getPathSegments().get(1)); // get the id from the uri
+		}
+		queryBuilder.setTables(AegisDatabaseHelper.DB_TABLE_ACCT_INFO);
+		cursor = queryBuilder.query(aegisDb, projection, selection, selectionArgs, 
+				null, null, sortOrder);
+		// register content resolver for change notifications to the cursor result set
+		cursor.setNotificationUri(getContext().getContentResolver(), uri);
+		
+		return cursor;
 	}
 
 	/**
@@ -132,8 +170,26 @@ public class AccountInformationProvider extends ContentProvider {
 	@Override
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		
+		switch(uriMatcher.match(uri)) {
+			case ALLROWS:
+				count = aegisDb.update(AegisDatabaseHelper.DB_TABLE_ACCT_INFO, values, 
+						selection, selectionArgs);
+				break;
+			case SINGLE_ROW:
+				String segment = uri.getPathSegments().get(1);
+				String where = !TextUtils.isEmpty(selection) ? "AND (" + selection + ")" : "";
+				count = aegisDb.update(AegisDatabaseHelper.DB_TABLE_ACCT_INFO, values, 
+						KEY_ID + "=" + segment + where,
+						selectionArgs);
+				break;
+			default:
+				throw new IllegalArgumentException("Unsupported URI: " + uri);
+		
+		}
+		
+		return count;
 	}
 
 }
