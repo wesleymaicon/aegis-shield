@@ -31,5 +31,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- the account information data provider -->
+        <provider android:authorities="com.googlecode.aegisshield"
+                  android:name="com.googlecode.aegisshield.domain.AccountInformationProvider">
+        </provider>
 	</application>
 </manifest> 
