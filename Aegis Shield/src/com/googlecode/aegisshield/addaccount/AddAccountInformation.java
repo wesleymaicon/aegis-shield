@@ -4,13 +4,16 @@
  */
 package com.googlecode.aegisshield.addaccount;
 
-import com.googlecode.aegisshield.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.googlecode.aegisshield.R;
+import com.googlecode.aegisshield.domain.AccountInformation;
+import com.googlecode.aegisshield.domain.AccountInformationRepository;
 
 /**
  * 	Activity for adding a new user account password information.
@@ -18,6 +21,10 @@ import android.widget.Button;
  * @author Mihai Campean
  */
 public class AddAccountInformation extends Activity {
+	/**
+	 * 	Constant for not available strings.
+	 */
+	private static final String N_A = "n/a";
 
 	/**
 	 * @param savedInstanceState
@@ -34,12 +41,44 @@ public class AddAccountInformation extends Activity {
 			 * 	Add the account information in the the database when the "add account" button
 			 * is pressed.
 			 * 
-			 * @param v
+			 * @param view
 			 * @see android.view.View.OnClickListener#onClick(android.view.View)
 			 */
 			@Override
-			public void onClick(View v) {
-				//TODO add the stuff in the database.
+			public void onClick(View view) {
+				// add account button was pressed, we try to save the data
+				if (R.id.add_account_button == view.getId()) {
+					AccountInformationRepository acctRepository = 
+							new AccountInformationRepository(getContentResolver());
+					AccountInformation acctInformation = new AccountInformation();
+					
+					String acctName = ((EditText) findViewById(R.id.account_name_edit)).getText().toString();
+					String acctUser = ((EditText) findViewById(R.id.account_user_edit)).getText().toString();
+					String acctPass = ((EditText) findViewById(R.id.account_password_edit))
+							.getText().toString();
+					String acctDesc = ((EditText) findViewById(R.id.account_description_edit))
+							.getText().toString();
+					
+					//TODO add some validation code, and return a proper message if fields are not filled.
+					if (acctName == null || "".equals(acctName.trim())) {
+						acctName = N_A;
+					}
+					if (acctUser == null || "".equals(acctUser.trim())) {
+						acctUser = N_A;
+					}
+					if (acctPass == null || "".equals(acctPass.trim())) {
+						acctPass = N_A;
+					}
+					if (acctDesc == null || "".equals(acctDesc.trim())) {
+						acctDesc = N_A;
+					}
+					
+					acctInformation.setAccountName(acctName);
+					acctInformation.setUserName(acctUser);
+					acctInformation.setPassword(acctPass);
+					acctInformation.setDescription(acctDesc);
+					acctRepository.save(acctInformation);
+				}
 			}
 		});
 	}
