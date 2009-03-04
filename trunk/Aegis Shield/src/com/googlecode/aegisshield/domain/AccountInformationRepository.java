@@ -23,18 +23,12 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 	private ContentResolver resolver;
 	
 	/**
-	 * 	The account information provider for saving and loading account information objects.
-	 */
-	private AccountInformationProvider acctProvider;
-	
-	/**
 	 * Public constructor taking the content resolver as argument.
 	 * 
 	 * @param resolver
 	 */
 	public AccountInformationRepository(ContentResolver resolver) {
 		this.resolver = resolver;
-		acctProvider = new AccountInformationProvider();
 	}
 	
 	/**
@@ -52,7 +46,7 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 		values.put(AccountInformationProvider.KEY_USER_NAME, account.getUserName());
 		values.put(AccountInformationProvider.KEY_DESCRIPTION, account.getDescription());
 		
-		returnUri = acctProvider.insert(AccountInformationProvider.CONTENT_URI, values);
+		returnUri = resolver.insert(AccountInformationProvider.CONTENT_URI, values);
 		
 		return returnUri;
 	}
