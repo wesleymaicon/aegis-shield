@@ -95,4 +95,13 @@ public class AccountInformation {
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
 	}
+	
+	/**
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return id + "-" + accountName + "-" + userName;
+	}
 }

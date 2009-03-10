@@ -21,4 +21,11 @@ public interface DataRepository<E> {
 	 * @return
 	 */
 	public Uri save(E domainObject);
+	
+	/**
+	 * 	Loads all the objects from the database.
+	 * 
+	 * @return
+	 */
+	public E [] loadAll();
 }

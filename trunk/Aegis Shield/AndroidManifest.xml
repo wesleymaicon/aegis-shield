@@ -31,6 +31,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".accountoverview.AccountInfoOverview" android:label="@string/account_overview_text">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         <!-- the account information data provider -->
         <provider android:authorities="com.googlecode.aegisshield"
                   android:name="com.googlecode.aegisshield.domain.AccountInformationProvider">
