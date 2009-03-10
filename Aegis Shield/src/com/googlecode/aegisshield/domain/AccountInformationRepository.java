@@ -5,14 +5,21 @@
  */
 package com.googlecode.aegisshield.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * 	According to the DDD principles, domain objects should be accessed through repository objects. This 
  * repository, has the role of abstracting the access to the AccountInformationProvider, as to separate the
  * activity code from the database access and manipulation code.
+ * 
+ * TODO - see how this way of designing and working, influences performance of the application.
  * 
  * @author Mihai Campean
  */
@@ -37,7 +44,10 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 	 * @param account
 	 * @return
 	 */
+	@Override
 	public Uri save(AccountInformation account) {
+		Log.d("aegis", "begin: AccountInformationRepository.save");
+		
 		Uri returnUri = null;
 		ContentValues values = new ContentValues();
 		
@@ -48,6 +58,40 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 		
 		returnUri = resolver.insert(AccountInformationProvider.CONTENT_URI, values);
 		
+		Log.d("aegis", "end: AccountInformationRepository.save");
 		return returnUri;
 	}
+	
+	/**
+	 * 
+	 * @see com.googlecode.aegisshield.domain.DataRepository#loadAll()
+	 */
+	@Override
+	public AccountInformation [] loadAll() {
+		Log.d("aegis", "start: AccountInformationRepository.loadAll");
+		
+		Cursor cursor = resolver.query(AccountInformationProvider.CONTENT_URI, null, null, null, null);
+		AccountInformation [] acctInfoList = new AccountInformation[cursor.getCount()];
+		AccountInformation acctInfo = null;
+		if (cursor.moveToFirst()) {
+			do {
+				acctInfo = new AccountInformation();
+				acctInfo.setId(cursor.getInt(AccountInformationProvider.ID_COLUMN));
+				acctInfo.setAccountName(cursor.getString(AccountInformationProvider.ACCOUNT_NAME_COLUMN));
+				acctInfo.setPassword(cursor.getString(AccountInformationProvider.PASSWORD_COLUMN));
+				acctInfo.setUserName(cursor.getString(AccountInformationProvider.USER_NAME_COLUMN));
+				acctInfo.setDescription(cursor.getString(AccountInformationProvider.DESCRIPTION_COLUMN));
+				acctInfoList[cursor.getPosition()] = acctInfo;
+			} while(cursor.moveToNext());
+		}
+		
+		// don't forget to cleanup
+		cursor.close();
+		cursor = null;
+		Log.d("aegis", "return: " + acctInfoList);
+		Log.d("aegis", "end: AccountInformationRepository.loadAll");
+		
+		return acctInfoList;
+	}
+	
 }

@@ -8,6 +8,7 @@
     <string name="genpw_button_text"> generate password </string>
     <string name="generate_password_text"> generate password </string>
     <string name="add_account_text"> add new account </string>
+    <string name="account_overview_text"> account overview </string>
     <string name="add_account_button_text"> new account </string>
     <string name="account_name_text"> account name </string>
     <string name="account_user_text"> account user </string>
