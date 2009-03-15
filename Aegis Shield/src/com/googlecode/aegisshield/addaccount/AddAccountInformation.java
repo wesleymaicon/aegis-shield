@@ -51,13 +51,15 @@ public class AddAccountInformation extends Activity {
 					AccountInformationRepository acctRepository = 
 							new AccountInformationRepository(getContentResolver());
 					AccountInformation acctInformation = new AccountInformation();
+					EditText acctNameEdit = (EditText) findViewById(R.id.account_name_edit);
+					EditText acctUserEdit = (EditText) findViewById(R.id.account_user_edit);
+					EditText acctPassEdit = (EditText) findViewById(R.id.account_password_edit);
+					EditText acctDescEdit = (EditText) findViewById(R.id.account_description_edit);
 					
-					String acctName = ((EditText) findViewById(R.id.account_name_edit)).getText().toString();
-					String acctUser = ((EditText) findViewById(R.id.account_user_edit)).getText().toString();
-					String acctPass = ((EditText) findViewById(R.id.account_password_edit))
-							.getText().toString();
-					String acctDesc = ((EditText) findViewById(R.id.account_description_edit))
-							.getText().toString();
+					String acctName = acctNameEdit.getText().toString();
+					String acctUser = acctUserEdit.getText().toString();
+					String acctPass = acctPassEdit.getText().toString();
+					String acctDesc = acctDescEdit.getText().toString();
 					
 					//TODO add some validation code, and return a proper message if fields are not filled.
 					if (acctName == null || "".equals(acctName.trim())) {
@@ -77,7 +79,14 @@ public class AddAccountInformation extends Activity {
 					acctInformation.setUserName(acctUser);
 					acctInformation.setPassword(acctPass);
 					acctInformation.setDescription(acctDesc);
+					
 					acctRepository.save(acctInformation);
+					
+					// empty the controls...
+					acctNameEdit.setText("");
+					acctUserEdit.setText("");
+					acctPassEdit.setText("");
+					acctDescEdit.setText("");
 				}
 			}
 		});
