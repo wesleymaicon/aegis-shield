@@ -1,5 +1,6 @@
 package com.googlecode.aegisshield;
 
+import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
 import com.googlecode.aegisshield.addaccount.AddAccountInformation;
 import com.googlecode.aegisshield.password.GeneratePassword;
 import com.googlecode.aegisshield.password.VerifyPassword;
@@ -41,6 +42,16 @@ public class AegisMain extends Activity {
 				final Intent myIntent = new Intent(AegisMain.this, AddAccountInformation.class);
 				startActivity(myIntent);
 			}
+        });
+        
+        final Button goToAcctOverview = (Button) findViewById(R.id.account_overview_button);
+        goToAcctOverview.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final Intent myIntent = new Intent(AegisMain.this, AccountInfoOverview.class);
+				startActivity(myIntent);
+			}
+        	
         });
     }
 }

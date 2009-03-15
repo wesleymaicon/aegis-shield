@@ -13,4 +13,7 @@
     <Button android:id="@+id/add_account_button" android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:layout_gravity="center_vertical"
         android:text="@string/add_account_button_text" />
+    <Button android:id="@+id/account_overview_button" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+        android:text="@string/account_overview_button_text" />
 </LinearLayout>

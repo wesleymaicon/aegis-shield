@@ -5,9 +5,6 @@
  */
 package com.googlecode.aegisshield.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -58,6 +55,7 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 		
 		returnUri = resolver.insert(AccountInformationProvider.CONTENT_URI, values);
 		
+		Log.d("aegis", "return: " + returnUri);
 		Log.d("aegis", "end: AccountInformationRepository.save");
 		return returnUri;
 	}

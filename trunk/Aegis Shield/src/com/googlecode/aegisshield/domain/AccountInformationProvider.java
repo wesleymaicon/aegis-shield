@@ -51,15 +51,15 @@ public class AccountInformationProvider extends ContentProvider {
 	public static final String KEY_ACCOUNT_NAME = "account_name";
 	
 	//column indexes
-	public static final int ID_COLUMN = 1;
+	public static final int ID_COLUMN = 0;
 	
-	public static final int USER_NAME_COLUMN = 2;
+	public static final int USER_NAME_COLUMN = 1;
 	
-	public static final int PASSWORD_COLUMN = 3;
+	public static final int PASSWORD_COLUMN = 2;
 	
-	public static final int DESCRIPTION_COLUMN = 4;
+	public static final int DESCRIPTION_COLUMN = 3;
 	
-	public static final int ACCOUNT_NAME_COLUMN = 5;
+	public static final int ACCOUNT_NAME_COLUMN = 4;
 	
 	/**
 	 * 	The SQLiteDatabase instance used for database access in the Aegis Shield application.
