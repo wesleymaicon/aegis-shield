@@ -92,4 +92,15 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 		return acctInfoList;
 	}
 	
+	/**
+	 * 
+	 * @see com.googlecode.aegisshield.domain.DataRepository#delete(java.lang.Object)
+	 */
+	@Override
+	public int delete(AccountInformation domainObject) {
+		Uri deleteRow = Uri.parse(AccountInformationProvider.CONTENT_URI.toString() 
+				+ "/#" + domainObject.getId());
+		return resolver.delete(deleteRow,null, null);
+	}
+	
 }

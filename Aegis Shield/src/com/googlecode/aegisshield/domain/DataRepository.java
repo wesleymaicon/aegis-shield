@@ -28,4 +28,12 @@ public interface DataRepository<E> {
 	 * @return
 	 */
 	public E [] loadAll();
+	
+	/**
+	 * 	Deletes the specified domain object from the database.
+	 * 
+	 * @param domainObject
+	 * @return the the number of deleted rows
+	 */
+	public int delete(E domainObject);
 }
