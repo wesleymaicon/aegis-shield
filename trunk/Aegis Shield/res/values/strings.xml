@@ -15,4 +15,6 @@
     <string name="account_password_text"> account password </string>
     <string name="account_description_text"> account description </string>
     <string name="account_overview_button_text"> account overview </string>
+    <string name="delete_account_button_text"> delete </string>
+    <string name="edit_account_button_text"> edit </string>
 </resources>
