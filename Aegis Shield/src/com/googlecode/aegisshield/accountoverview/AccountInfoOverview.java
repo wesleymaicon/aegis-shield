@@ -5,46 +5,33 @@
  */
 package com.googlecode.aegisshield.accountoverview;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 
-import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
 
 /**
- * 	Activity for displaying all account information in a list.
+ * 	Activity for displaying all account information in a list. It will have the proper menus for adding,
+ * viewing/editing and deleting an account information object from the list and the database.
  * 
  * @author Mihai Campean
  */
-public class AccountInfoOverview extends Activity {
+public class AccountInfoOverview extends ListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.account_overview);
+		
+		// we provide context menus
+		getListView().setOnCreateContextMenuListener(this);
 		
 		//load the items in the list
-		ListView itemsView = (ListView) findViewById(R.id.account_list);
 		AccountInformation [] content = new AccountInformationRepository(getContentResolver()).loadAll();
 		ArrayAdapter<AccountInformation> adapter = new ArrayAdapter<AccountInformation>(this, 
 				android.R.layout.simple_list_item_1, content);
-		itemsView.setAdapter(adapter);
-		
-		//delete an item from the list
-		Button delete = (Button) findViewById(R.id.delete_account_button);
-		delete.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//TODO add the deletion code here...
-				
-			}
-		});
+		setListAdapter(adapter);
 	}
 
 }

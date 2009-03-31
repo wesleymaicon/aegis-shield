@@ -3,18 +3,6 @@
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="wrap_content">
     
-    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_gravity="center_vertical">
-        <Button android:id="@+id/delete_account_button" android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/delete_account_button_text">
-        </Button>
-        <Button android:id="@+id/edit_account_button" android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_account_button_text">
-        </Button>
-    </LinearLayout>
-    
     <ListView android:id="@+id/account_list" android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
         
