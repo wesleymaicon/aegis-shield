@@ -44,4 +44,5 @@
                   android:name="com.googlecode.aegisshield.domain.AccountInformationProvider">
         </provider>
 	</application>
+    <permission android:name="password_access" android:protectionLevel="signature"></permission>
 </manifest> 
