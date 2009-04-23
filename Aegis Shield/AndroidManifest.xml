@@ -40,7 +40,7 @@
         </activity>
         
         <!-- the account information data provider -->
-        <provider android:authorities="com.googlecode.aegisshield"
+        <provider android:authorities="com.googlecode.aegisshield.accountinformationprovider"
                   android:name="com.googlecode.aegisshield.domain.AccountInformationProvider">
         </provider>
 	</application>

@@ -28,7 +28,11 @@ public class AccountInformationProvider extends ContentProvider {
 	/**
 	 * 	The Account Information URI provider.
 	 */
-	public static final Uri CONTENT_URI = Uri.parse("content://com.googlecode.aegisshield/accountinfo");
+	public static final Uri CONTENT_URI = 
+			Uri.parse("content://com.googlecode.aegisshield.accountinformationprovider");
+	
+	public static final Uri CONTENT_ACCT_INFO_URI = 
+			Uri.parse("content://com.googlecode.aegisshield.accountinformationprovider/accountinfo");
 	
 	/**
 	 * Don't know how to use this yet...
@@ -68,8 +72,8 @@ public class AccountInformationProvider extends ContentProvider {
 	
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI("com.googlecode.aegisshield", "accountinfo", ALLROWS);
-		uriMatcher.addURI("com.googlecode.aegisshield", "accountinfo/#", SINGLE_ROW);
+		uriMatcher.addURI("com.googlecode.aegisshield.accountinformationprovider", "/accountinfo", ALLROWS);
+		uriMatcher.addURI("com.googlecode.aegisshield.accountinformationprovider", "/accountinfo/#", SINGLE_ROW);
 	}
 	
 	/**
@@ -107,9 +111,9 @@ public class AccountInformationProvider extends ContentProvider {
 	public String getType(Uri uri) {
 		switch (uriMatcher.match(uri)) {
 			case ALLROWS: 
-				return "vnd.aegisshield.cursor.dir/accountinfo";
+				return "vnd.android.cursor.dir/vnd.aegisshield.accountinfo";
 			case SINGLE_ROW:
-				return "vnd.aegisshield.cursor.item/accountinfo";
+				return "vnd.android.cursor.item/vnd.aegisshield.accountinfo";
 			default:
 				throw new IllegalArgumentException("Unsupported URI: " + uri);
 		}
@@ -122,7 +126,7 @@ public class AccountInformationProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		long rowId = aegisDb.insert(AegisDatabaseHelper.DB_TABLE_ACCT_INFO, "aegis", values);
 		if (rowId > 0) {
-			Uri insertUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
+			Uri insertUri = ContentUris.withAppendedId(CONTENT_ACCT_INFO_URI, rowId);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return insertUri;
 		} else {

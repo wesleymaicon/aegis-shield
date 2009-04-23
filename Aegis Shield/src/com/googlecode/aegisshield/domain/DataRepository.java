@@ -5,6 +5,8 @@
  */
 package com.googlecode.aegisshield.domain;
 
+import java.util.List;
+
 import android.net.Uri;
 
 /**
@@ -27,7 +29,7 @@ public interface DataRepository<E> {
 	 * 
 	 * @return
 	 */
-	public E [] loadAll();
+	public List<E> loadAll();
 	
 	/**
 	 * 	Deletes the specified domain object from the database.
