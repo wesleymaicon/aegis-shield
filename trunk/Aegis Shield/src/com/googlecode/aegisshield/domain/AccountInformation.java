@@ -104,4 +104,20 @@ public class AccountInformation {
 	public String toString() {
 		return id + "-" + accountName + "-" + userName;
 	}
+	
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		boolean isEqual = false;
+		
+		if (o instanceof AccountInformation) {
+			AccountInformation other = (AccountInformation) o;
+			isEqual = this.id == other.getId();
+		}
+		
+		return isEqual;
+	}
+	
 }

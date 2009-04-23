@@ -5,7 +5,11 @@
  */
 package com.googlecode.aegisshield.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -53,7 +57,7 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 		values.put(AccountInformationProvider.KEY_USER_NAME, account.getUserName());
 		values.put(AccountInformationProvider.KEY_DESCRIPTION, account.getDescription());
 		
-		returnUri = resolver.insert(AccountInformationProvider.CONTENT_URI, values);
+		returnUri = resolver.insert(AccountInformationProvider.CONTENT_ACCT_INFO_URI, values);
 		
 		Log.d("aegis", "return: " + returnUri);
 		Log.d("aegis", "end: AccountInformationRepository.save");
@@ -65,11 +69,11 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 	 * @see com.googlecode.aegisshield.domain.DataRepository#loadAll()
 	 */
 	@Override
-	public AccountInformation [] loadAll() {
+	public List<AccountInformation> loadAll() {
 		Log.d("aegis", "start: AccountInformationRepository.loadAll");
 		
-		Cursor cursor = resolver.query(AccountInformationProvider.CONTENT_URI, null, null, null, null);
-		AccountInformation [] acctInfoList = new AccountInformation[cursor.getCount()];
+		Cursor cursor = resolver.query(AccountInformationProvider.CONTENT_ACCT_INFO_URI, null, null, null, null);
+		List<AccountInformation> acctInfoList = new ArrayList<AccountInformation>();
 		AccountInformation acctInfo = null;
 		if (cursor.moveToFirst()) {
 			do {
@@ -79,7 +83,7 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 				acctInfo.setPassword(cursor.getString(AccountInformationProvider.PASSWORD_COLUMN));
 				acctInfo.setUserName(cursor.getString(AccountInformationProvider.USER_NAME_COLUMN));
 				acctInfo.setDescription(cursor.getString(AccountInformationProvider.DESCRIPTION_COLUMN));
-				acctInfoList[cursor.getPosition()] = acctInfo;
+				acctInfoList.add(acctInfo);
 			} while(cursor.moveToNext());
 		}
 		
@@ -98,9 +102,16 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 	 */
 	@Override
 	public int delete(AccountInformation domainObject) {
-		Uri deleteRow = Uri.parse(AccountInformationProvider.CONTENT_URI.toString() 
-				+ "/#" + domainObject.getId());
-		return resolver.delete(deleteRow,null, null);
+		Log.d("aegis", "start: AccountInformationRepository.delete");
+		Log.d("aegis", "deleting: " + domainObject);
+		
+		Uri deleteRow = ContentUris.withAppendedId(
+				AccountInformationProvider.CONTENT_ACCT_INFO_URI, domainObject.getId());
+		
+		Log.d("aegis", "return: " + deleteRow);
+		Log.d("aegis", "end: AccountInformationRepository.delete");
+		
+		return resolver.delete(deleteRow, null, null);
 	}
 	
 }
