@@ -72,8 +72,8 @@ public class AccountInformationProvider extends ContentProvider {
 	
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI("com.googlecode.aegisshield.accountinformationprovider", "/accountinfo", ALLROWS);
-		uriMatcher.addURI("com.googlecode.aegisshield.accountinformationprovider", "/accountinfo/#", SINGLE_ROW);
+		uriMatcher.addURI("com.googlecode.aegisshield.accountinformationprovider", "accountinfo", ALLROWS);
+		uriMatcher.addURI("com.googlecode.aegisshield.accountinformationprovider", "accountinfo/#", SINGLE_ROW);
 	}
 	
 	/**
