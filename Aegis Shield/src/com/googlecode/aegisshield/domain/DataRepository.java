@@ -38,4 +38,11 @@ public interface DataRepository<E> {
 	 * @return the the number of deleted rows
 	 */
 	public int delete(E domainObject);
+	
+	/**
+	 * 	Updates the specified domain object in the database.
+	 * @param domainObject
+	 * @return
+	 */
+	public int update(E domainObject);
 }

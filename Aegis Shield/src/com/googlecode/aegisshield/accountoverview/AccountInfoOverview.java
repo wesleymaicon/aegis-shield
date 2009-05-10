@@ -8,6 +8,7 @@ package com.googlecode.aegisshield.accountoverview;
 import java.util.List;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,8 +16,10 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 
 import com.googlecode.aegisshield.R;
+import com.googlecode.aegisshield.addaccount.AddAccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
+import com.googlecode.aegisshield.editaccount.EditAccountInformation;
 
 /**
  * 	Activity for displaying all account information in a list. It will have the proper menus for adding,
@@ -25,7 +28,10 @@ import com.googlecode.aegisshield.domain.AccountInformationRepository;
  * @author Mihai Campean
  */
 public class AccountInfoOverview extends ListActivity {
-	
+	/**
+	 * 	Key to identify the account information passed to te edit activity.
+	 */
+	public static final String ACC_INFO_TO_EDIT_Key = "accountInfoToEdit";
 	/**
 	 * 	The friggin' account info adapter - this is sort of a model object from the MVC pattern, at least
 	 * that's what I think.
@@ -77,7 +83,11 @@ public class AccountInfoOverview extends ListActivity {
 		
 		return true;
 	}
-
+	/**
+	 * 	Reacts on users clicking on menu items.
+	 * 
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean handled = false;
@@ -85,7 +95,8 @@ public class AccountInfoOverview extends ListActivity {
 		
 		switch(item.getItemId()) {
 			case R.id.list_add:
-				// TODO forward to add activity
+				Intent addIntent = new Intent(this, AddAccountInformation.class);
+				startActivity(addIntent);
 				break;
 			case R.id.list_delete:
 				if (AdapterView.INVALID_POSITION != position) {
@@ -93,7 +104,12 @@ public class AccountInfoOverview extends ListActivity {
 				}
 				break;
 			case R.id.list_edit:
-				// TODO forward to edit activity
+				if (AdapterView.INVALID_POSITION != position) {
+	 				AccountInformation info = (AccountInformation) acctInfoListAdapter.getItem(position);
+					Intent editIntent = new Intent(AccountInfoOverview.this, EditAccountInformation.class);
+					editIntent.putExtra(ACC_INFO_TO_EDIT_Key, info);
+					startActivity(editIntent);
+				}
 				break;
 			default:
 				break;
