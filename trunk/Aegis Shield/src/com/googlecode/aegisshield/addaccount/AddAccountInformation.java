@@ -35,6 +35,8 @@ public class AddAccountInformation extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_account);
 		
+		//TODO treat a navigator to overview button
+		
 		Button addAccount = (Button) findViewById(R.id.add_account_button);
 		addAccount.setOnClickListener(new OnClickListener() {
 			/**

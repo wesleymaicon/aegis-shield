@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TableRow>
+        <TextView android:id="@+id/edit_account_screen_name"
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true" 
+            android:text="@string/edit_account_text" />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@+id/account_name_label"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="@string/account_name_text" />
+
+        <EditText android:id="@+id/account_name_edit"
+            android:layout_width="180px" 
+            android:layout_height="wrap_content" />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@+id/account_user_label"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="@string/account_user_text" />
+
+        <EditText android:id="@+id/account_user_edit"
+            android:layout_width="180px" 
+            android:layout_height="wrap_content" />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@+id/account_password_label"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="@string/account_password_text" />
+
+        <EditText android:id="@+id/account_password_edit"
+            android:layout_width="180px" 
+            android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@+id/account_description_label"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="@string/account_description_text" />
+
+        <EditText android:id="@+id/account_description_edit"
+            android:layout_width="180px" 
+            android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow>
+        <Button android:id="@+id/save_account_button" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_account_button_text" />
+    </TableRow>
+</TableLayout>

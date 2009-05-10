@@ -17,4 +17,6 @@
     <string name="delete_account_text"> delete </string>
     <string name="edit_account_text"> edit </string>
     <string name="add_account_text"> add </string>
+    <string name="save_account_button_text"> save </string>
+    <string name="overview_account_text"> overview </string>
 </resources>

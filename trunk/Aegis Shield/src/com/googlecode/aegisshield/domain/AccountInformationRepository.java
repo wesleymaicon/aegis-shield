@@ -40,6 +40,23 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 	}
 	
 	/**
+	 * 	Does what the name says.
+	 * 
+	 * @param acctInfo
+	 * @return
+	 */
+	private ContentValues acctInfoToContentValues(AccountInformation acctInfo) {
+		ContentValues values = new ContentValues();
+		
+		values.put(AccountInformationProvider.KEY_ACCOUNT_NAME, acctInfo.getAccountName());
+		values.put(AccountInformationProvider.KEY_PASSWORD, acctInfo.getPassword());  // should be encrypted
+		values.put(AccountInformationProvider.KEY_USER_NAME, acctInfo.getUserName());
+		values.put(AccountInformationProvider.KEY_DESCRIPTION, acctInfo.getDescription());
+		
+		return values;
+	}
+	
+	/**
 	 * 	Save an AccountInformation object in the application database.
 	 * 
 	 * @param account
@@ -50,14 +67,8 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 		Log.d("aegis", "begin: AccountInformationRepository.save");
 		
 		Uri returnUri = null;
-		ContentValues values = new ContentValues();
-		
-		values.put(AccountInformationProvider.KEY_ACCOUNT_NAME, account.getAccountName());
-		values.put(AccountInformationProvider.KEY_PASSWORD, account.getPassword());  // should be encrypted
-		values.put(AccountInformationProvider.KEY_USER_NAME, account.getUserName());
-		values.put(AccountInformationProvider.KEY_DESCRIPTION, account.getDescription());
-		
-		returnUri = resolver.insert(AccountInformationProvider.CONTENT_ACCT_INFO_URI, values);
+		returnUri = resolver.insert(AccountInformationProvider.CONTENT_ACCT_INFO_URI, 
+				acctInfoToContentValues(account));
 		
 		Log.d("aegis", "return: " + returnUri);
 		Log.d("aegis", "end: AccountInformationRepository.save");
@@ -101,17 +112,33 @@ public class AccountInformationRepository implements DataRepository<AccountInfor
 	 * @see com.googlecode.aegisshield.domain.DataRepository#delete(java.lang.Object)
 	 */
 	@Override
-	public int delete(AccountInformation domainObject) {
+	public int delete(AccountInformation accountInfo) {
 		Log.d("aegis", "start: AccountInformationRepository.delete");
-		Log.d("aegis", "deleting: " + domainObject);
+		Log.d("aegis", "deleting: " + accountInfo);
 		
 		Uri deleteRow = ContentUris.withAppendedId(
-				AccountInformationProvider.CONTENT_ACCT_INFO_URI, domainObject.getId());
+				AccountInformationProvider.CONTENT_ACCT_INFO_URI, accountInfo.getId());
 		
 		Log.d("aegis", "return: " + deleteRow);
 		Log.d("aegis", "end: AccountInformationRepository.delete");
 		
 		return resolver.delete(deleteRow, null, null);
+	}
+
+	/**
+	 * @see com.googlecode.aegisshield.domain.DataRepository#update(java.lang.Object)
+	 */
+	@Override
+	public int update(AccountInformation accountInfo) {
+		Log.d("aegis", "start: AccountInformationRepository.update");
+		Log.d("aegis", "updating: " + accountInfo);
+		
+		int rowsAffected = resolver.update(
+				ContentUris.withAppendedId(AccountInformationProvider.CONTENT_ACCT_INFO_URI, accountInfo.getId()), 
+				acctInfoToContentValues(accountInfo), null, null);
+		
+		Log.d("aegis", "end: AccountInformationRepository.update");
+		return rowsAffected;
 	}
 	
 }

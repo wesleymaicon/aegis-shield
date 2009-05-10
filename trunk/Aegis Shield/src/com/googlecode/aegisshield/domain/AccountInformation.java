@@ -4,12 +4,19 @@
  */
 package com.googlecode.aegisshield.domain;
 
+import java.io.Serializable;
+
 /**
  * 	Domain object holding the information about the user accounts.
  * 
  * @author Mihai Campean
  */
-public class AccountInformation {
+public class AccountInformation implements Serializable {
+	/**
+	 * 	Generated serial version id.
+	 */
+	private static final long serialVersionUID = 7358580701503426857L;
+
 	/**
 	 * 	The technical account id for this account information object.
 	 */
