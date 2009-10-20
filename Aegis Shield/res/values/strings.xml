@@ -19,4 +19,7 @@
     <string name="add_account_text"> add </string>
     <string name="save_account_button_text"> save </string>
     <string name="overview_account_text"> overview </string>
+    <string name="login_password_text"> password </string>
+    <string name="login_passwordcheck_text">check password </string>
+    <string name="login_button_text"> login </string>
 </resources>

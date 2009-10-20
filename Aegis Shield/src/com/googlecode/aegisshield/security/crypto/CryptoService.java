@@ -20,6 +20,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
+import com.googlecode.aegisshield.app.utils.Base64Coder;
+
 import android.util.Log;
 
 /**
@@ -122,7 +124,8 @@ public final class CryptoService {
 		Cipher cipher = initCipher(Cipher.ENCRYPT_MODE, password);
 		
 		try {
-			encData = new String(cipher.doFinal(password.getBytes()));
+			
+			encData = Base64Coder.encodeString(new String(cipher.doFinal(password.getBytes())));
 		} catch (IllegalBlockSizeException e) {
 			Log.e("aegis", e.getMessage());
 			throw new CryptoServiceException(e);
@@ -146,7 +149,7 @@ public final class CryptoService {
 		Cipher cipher = initCipher(Cipher.DECRYPT_MODE, password);
 		
 		try {
-			data = new String(cipher.doFinal(encData.getBytes()));
+			data = new String(cipher.doFinal(Base64Coder.decodeString(encData).getBytes()));
 		} catch (IllegalBlockSizeException e) {
 			Log.e("aegis", e.getMessage());
 			throw new CryptoServiceException(e);

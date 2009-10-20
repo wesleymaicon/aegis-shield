@@ -22,6 +22,11 @@ import com.googlecode.aegisshield.domain.AccountInformationRepository;
  */
 public class AddAccountInformation extends Activity {
 	/**
+	 * 	Intent action for the AddAccountInformation activity.
+	 */
+	public static final String ADD_ACCT_INFO_ACTION = "com.googlecode.aegisshield.action.ADD_ACCT_INFO_ACTION";
+	
+	/**
 	 * 	Constant for not available strings.
 	 */
 	private static final String N_A = "n/a";
