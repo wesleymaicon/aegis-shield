@@ -29,6 +29,11 @@ import com.googlecode.aegisshield.editaccount.EditAccountInformation;
  */
 public class AccountInfoOverview extends ListActivity {
 	/**
+	 * 	Intent action for the AccountInfoOverview.
+	 */
+	public static final String ACCT_INFO_OVERVIEW_ACTION = "com.googlecode.aegisshield.action.ACCT_INFO_OVERVIEW_ACTION";
+	
+	/**
 	 * 	Key to identify the account information passed to te edit activity.
 	 */
 	public static final String ACC_INFO_TO_EDIT_Key = "accountInfoToEdit";
