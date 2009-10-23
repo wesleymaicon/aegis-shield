@@ -57,8 +57,8 @@ public class EditAccountInformation extends Activity {
 		final EditText passwd = (EditText) findViewById(R.id.account_password_edit);
 		final EditText description =  (EditText) findViewById(R.id.account_description_edit);
 		accountName.setText(info.getAccountName());
-		userName.setText(CryptoService.decrypt(info.getUserName(), encryptionKey));
-		passwd.setText(info.getPassword());
+		userName.setText(info.getUserName());
+		passwd.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
 		description.setText(info.getDescription());
 		
 		Button saveEdits = (Button) findViewById(R.id.save_account_button);
@@ -79,8 +79,10 @@ public class EditAccountInformation extends Activity {
 				editedInfo.setPassword(CryptoService.encrypt(passwd.getText().toString(), encryptionKey));
 				editedInfo.setDescription(description.getText().toString());
 				
-				acctRepository.save(editedInfo);
-				startActivity(new Intent(EditAccountInformation.this, AccountInfoOverview.class));
+				acctRepository.update(editedInfo);
+				Intent intent = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
+				intent.putExtra(AegisMain.HASHED_PASSWORD, encryptionKey);
+				startActivity(intent);
 			}
 		});
 	}
