@@ -36,6 +36,7 @@ public class PasswordStrength {
 			result += rule.getWeight() * rule.evaluate(password);
 			weights += rule.getWeight();
 		}
-		return (int) ((weights == 0) ? 0 : result/weights);
+		int finalResult = (int) ((weights == 0) ? 0 : result/weights);
+		return finalResult;
 	}
 }

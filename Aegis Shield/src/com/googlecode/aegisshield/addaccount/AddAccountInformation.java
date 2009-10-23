@@ -6,9 +6,12 @@ package com.googlecode.aegisshield.addaccount;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,6 +19,7 @@ import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
+import com.googlecode.aegisshield.password.utils.PasswordStrength;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
 
 /**
@@ -49,6 +53,10 @@ public class AddAccountInformation extends Activity {
 		setContentView(R.layout.add_account);
 		
 		Button addAccount = (Button) findViewById(R.id.add_account_button);
+		final EditText acctPassEdit = (EditText) findViewById(R.id.account_password_edit);
+		final EditText acctNameEdit = (EditText) findViewById(R.id.account_name_edit);
+		final EditText acctUserEdit = (EditText) findViewById(R.id.account_user_edit);
+		final EditText acctDescEdit = (EditText) findViewById(R.id.account_description_edit);
 		
 		Intent intent = getIntent();
 		if (ADD_ACCT_INFO_ACTION.equals(intent.getAction())) {
@@ -56,6 +64,22 @@ public class AddAccountInformation extends Activity {
 		} else {
 			//TODO, we should throw a runtime error here, since we cannot do anything much without a password.
 		}
+		
+		//register password strength check
+		acctPassEdit.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(event.getAction() == KeyEvent.ACTION_UP) {
+					int strength = PasswordStrength.evaluate(acctPassEdit.getText().toString());
+					if(strength >= 8) {
+						acctPassEdit.setTextColor(Color.GREEN);
+					}else {
+						acctPassEdit.setTextColor(Color.RED);
+					}
+				}
+				return false;
+			}
+        });
 		
 		addAccount.setOnClickListener(new OnClickListener() {
 			/**
@@ -72,10 +96,6 @@ public class AddAccountInformation extends Activity {
 					AccountInformationRepository acctRepository = 
 							new AccountInformationRepository(getContentResolver());
 					AccountInformation acctInformation = new AccountInformation();
-					EditText acctNameEdit = (EditText) findViewById(R.id.account_name_edit);
-					EditText acctUserEdit = (EditText) findViewById(R.id.account_user_edit);
-					EditText acctPassEdit = (EditText) findViewById(R.id.account_password_edit);
-					EditText acctDescEdit = (EditText) findViewById(R.id.account_description_edit);
 					
 					String acctName = acctNameEdit.getText().toString();
 					String acctUser = acctUserEdit.getText().toString();
@@ -108,6 +128,7 @@ public class AddAccountInformation extends Activity {
 					acctUserEdit.setText("");
 					acctPassEdit.setText("");
 					acctDescEdit.setText("");
+					
 				}
 			}
 		});
