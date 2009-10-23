@@ -9,6 +9,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.BadPaddingException;
@@ -19,8 +20,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-
-import com.googlecode.aegisshield.app.utils.Base64Coder;
 
 import android.util.Log;
 
@@ -34,7 +33,7 @@ public final class CryptoService {
 	/**
 	 * PBE encryption algorithm.
 	 */
-	private static final String PBE_ENC_ALGORITHM = "PBEWithMD5AndDES";
+	private static final String PBE_ENC_ALGORITHM = "PBEWITHSHA-256AND256BITAES-CBC-BC";
 
 	/**
 	 * 	8 byte salt used for encryption/decryption.
@@ -66,12 +65,12 @@ public final class CryptoService {
 	private static Cipher initCipher(int mode, String password) {
 		Cipher pbeCipher = null;
 		try {
-			PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray());
-			PBEParameterSpec paramSpec = new PBEParameterSpec(salt, count);
+			PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, count, 32);
 			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(PBE_ENC_ALGORITHM);
 			SecretKey key = keyFactory.generateSecret(keySpec);
+			AlgorithmParameterSpec aps = new PBEParameterSpec(salt, count);
 			pbeCipher = Cipher.getInstance(PBE_ENC_ALGORITHM);
-			pbeCipher.init(mode, key, paramSpec);
+			pbeCipher.init(mode, key, aps);
 		} catch (NoSuchAlgorithmException e) {
 			Log.e("aegis", e.getMessage());
 			throw new CryptoServiceException(e);
@@ -90,6 +89,52 @@ public final class CryptoService {
 		}
 		return pbeCipher;
 	}
+	
+	/**
+	 * 	Convert an array of bytes representing a string to a hex encoded string.
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	private static String toHexString(byte bytes[]) {
+		
+		StringBuffer retString = new StringBuffer();
+		for (int i = 0; i < bytes.length; ++i) {
+		    retString.append(Integer
+			    .toHexString(0x0100 + (bytes[i] & 0x00FF))
+			    .substring(1));
+		}
+		return retString.toString();
+    }
+	
+	/**
+	 *  Convert a hex encoded string into an array of bytes.
+	 * 
+	 * @param hex
+	 * @return
+	 */
+	private static byte[] hexStringToBytes(String hex) {
+    	
+    	byte [] bytes = new byte [hex.length() / 2];
+		int j = 0;
+		for (int i = 0; i < hex.length(); i += 2) {
+			try {
+				String hexByte = hex.substring(i, i + 2);
+
+				Integer I = new Integer (0);
+				I = Integer.decode("0x" + hexByte);
+				int k = I.intValue();
+				bytes[j++] = new Integer(k).byteValue();
+			} catch (NumberFormatException e) {
+				Log.i("aegis", e.getLocalizedMessage());
+				return bytes;
+			} catch (StringIndexOutOfBoundsException e) {
+				Log.i("aegis", "StringIndexOutOfBoundsException");
+				return bytes;
+			}
+		}
+    	return bytes;
+    }
 	
 	/**
 	 * 	Uses an MD5 algorithm in order to hash the string given as argument, returning the resulted
@@ -120,12 +165,11 @@ public final class CryptoService {
 	 * @param password
 	 */
 	public static String encrypt(String data, String password) {
-		String encData = null;
+		byte[] encrypted = new byte[] {};
 		Cipher cipher = initCipher(Cipher.ENCRYPT_MODE, password);
 		
 		try {
-			
-			encData = Base64Coder.encodeString(new String(cipher.doFinal(password.getBytes())));
+			encrypted = cipher.doFinal(data.getBytes());
 		} catch (IllegalBlockSizeException e) {
 			Log.e("aegis", e.getMessage());
 			throw new CryptoServiceException(e);
@@ -134,22 +178,23 @@ public final class CryptoService {
 			throw new CryptoServiceException(e);
 		}
 		
-		return encData;
+		return toHexString(encrypted);
 	}
 	
 	/**
-	 *  Decrypts a given string.
+	 *  Decrypts a given string. The string to be decrypted must be hex encoded, otherwise the method won't work.
+	 * This should always be used with the output of the encrypt method, which returns a hex encoded encrypted string.  
 	 * 
 	 * @param encData
 	 * @param password
 	 * @return
 	 */
 	public static String decrypt(String encData, String password) {
-		String data = null;
+		byte[] decrypted = new byte[] {};
 		Cipher cipher = initCipher(Cipher.DECRYPT_MODE, password);
 		
 		try {
-			data = new String(cipher.doFinal(Base64Coder.decodeString(encData).getBytes()));
+			decrypted = cipher.doFinal(hexStringToBytes(encData));
 		} catch (IllegalBlockSizeException e) {
 			Log.e("aegis", e.getMessage());
 			throw new CryptoServiceException(e);
@@ -158,6 +203,7 @@ public final class CryptoService {
 			throw new CryptoServiceException(e);
 		}
 		
-		return data;
+		return new String(decrypted);
 	}
+
 }
