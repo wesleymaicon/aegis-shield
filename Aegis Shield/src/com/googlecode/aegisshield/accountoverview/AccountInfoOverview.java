@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 
+import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.addaccount.AddAccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformation;
@@ -44,6 +45,11 @@ public class AccountInfoOverview extends ListActivity {
 	private AccountInfoAdapter acctInfoListAdapter;
 	
 	/**
+	 * 	Encryption key is the master password. We need to pass it on to the activities that use it.
+	 */
+	private String encryptionKey = "";
+	
+	/**
 	 * 	Delete an item from the list.
 	 * 
 	 * @param position
@@ -61,6 +67,11 @@ public class AccountInfoOverview extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Intent intent = getIntent();
+		if (ACCT_INFO_OVERVIEW_ACTION.equals(intent.getAction())) {
+			encryptionKey = intent.getExtras().getString(AegisMain.HASHED_PASSWORD);
+		}
 		
 		// we provide context menus
 		getListView().setOnCreateContextMenuListener(this);
@@ -100,7 +111,8 @@ public class AccountInfoOverview extends ListActivity {
 		
 		switch(item.getItemId()) {
 			case R.id.list_add:
-				Intent addIntent = new Intent(this, AddAccountInformation.class);
+				Intent addIntent = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
+				addIntent.putExtra(AegisMain.HASHED_PASSWORD, encryptionKey);
 				startActivity(addIntent);
 				break;
 			case R.id.list_delete:
@@ -111,8 +123,9 @@ public class AccountInfoOverview extends ListActivity {
 			case R.id.list_edit:
 				if (AdapterView.INVALID_POSITION != position) {
 	 				AccountInformation info = (AccountInformation) acctInfoListAdapter.getItem(position);
-					Intent editIntent = new Intent(AccountInfoOverview.this, EditAccountInformation.class);
+					Intent editIntent = new Intent(EditAccountInformation.EDIT_ACCT_INFO_ACTION);
 					editIntent.putExtra(ACC_INFO_TO_EDIT_Key, info);
+					editIntent.putExtra(AegisMain.HASHED_PASSWORD, encryptionKey);
 					startActivity(editIntent);
 				}
 				break;
