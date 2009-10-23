@@ -5,10 +5,12 @@
  */
 package com.googlecode.aegisshield.editaccount;
 
+import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
+import com.googlecode.aegisshield.security.crypto.CryptoService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,7 +26,16 @@ import android.widget.EditText;
  * @author Mihai Campean
  */
 public class EditAccountInformation extends Activity {
-
+	/**
+	 * 	The Intent action for EditAccountInformation activity.
+	 */
+	public static final String EDIT_ACCT_INFO_ACTION = "com.googlecode.aegisshield.action.EDIT_ACCT_INFO_ACTION";
+	
+	/**
+	 * 	This is the encryption key used to encrypt/decrypt passwords (master password).
+	 */
+	private String encryptionKey = "";
+	
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -32,6 +43,12 @@ public class EditAccountInformation extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_account);
+		Intent intent = getIntent();
+		
+		if (EDIT_ACCT_INFO_ACTION.equals(intent.getAction())) {
+			encryptionKey = intent.getExtras().getString(AegisMain.HASHED_PASSWORD);
+		}
+		
 		final AccountInformation info = (AccountInformation) getIntent().getExtras().getSerializable(
 				AccountInfoOverview.ACC_INFO_TO_EDIT_Key);
 		// populate the edit info activity fields
@@ -40,7 +57,7 @@ public class EditAccountInformation extends Activity {
 		final EditText passwd = (EditText) findViewById(R.id.account_password_edit);
 		final EditText description =  (EditText) findViewById(R.id.account_description_edit);
 		accountName.setText(info.getAccountName());
-		userName.setText(info.getUserName());
+		userName.setText(CryptoService.decrypt(info.getUserName(), encryptionKey));
 		passwd.setText(info.getPassword());
 		description.setText(info.getDescription());
 		
@@ -59,7 +76,7 @@ public class EditAccountInformation extends Activity {
 				editedInfo.setId(info.getId());
 				editedInfo.setAccountName(accountName.getText().toString());
 				editedInfo.setUserName(userName.getText().toString());
-				editedInfo.setPassword(passwd.getText().toString());
+				editedInfo.setPassword(CryptoService.encrypt(passwd.getText().toString(), encryptionKey));
 				editedInfo.setDescription(description.getText().toString());
 				
 				acctRepository.save(editedInfo);

@@ -34,7 +34,7 @@
         
         <activity android:name=".editaccount.EditAccountInformation" android:label="@string/edit_account_text">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="com.googlecode.aegisshield.action.EDIT_ACCT_INFO_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -5,15 +5,18 @@
 package com.googlecode.aegisshield.addaccount;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
+import com.googlecode.aegisshield.security.crypto.CryptoService;
 
 /**
  * 	Activity for adding a new user account password information.
@@ -30,7 +33,12 @@ public class AddAccountInformation extends Activity {
 	 * 	Constant for not available strings.
 	 */
 	private static final String N_A = "n/a";
-
+	
+	/**
+	 * 	Encryption key, coming from the calling intent - this is the master password, used to encrypt password data.
+	 */
+	private String encryptionKey = "";
+	
 	/**
 	 * @param savedInstanceState
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -40,9 +48,15 @@ public class AddAccountInformation extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_account);
 		
-		//TODO treat a navigator to overview button
-		
 		Button addAccount = (Button) findViewById(R.id.add_account_button);
+		
+		Intent intent = getIntent();
+		if (ADD_ACCT_INFO_ACTION.equals(intent.getAction())) {
+			encryptionKey = intent.getExtras().getString(AegisMain.HASHED_PASSWORD);
+		} else {
+			//TODO, we should throw a runtime error here, since we cannot do anything much without a password.
+		}
+		
 		addAccount.setOnClickListener(new OnClickListener() {
 			/**
 			 * 	Add the account information in the the database when the "add account" button
@@ -84,7 +98,7 @@ public class AddAccountInformation extends Activity {
 					
 					acctInformation.setAccountName(acctName);
 					acctInformation.setUserName(acctUser);
-					acctInformation.setPassword(acctPass);
+					acctInformation.setPassword(CryptoService.encrypt(acctPass, encryptionKey));
 					acctInformation.setDescription(acctDesc);
 					
 					acctRepository.save(acctInformation);
