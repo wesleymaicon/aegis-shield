@@ -7,8 +7,6 @@ package com.googlecode.aegisshield.password.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.util.Log;
-
 /**
  * Abstract rule for determining a password's strength.
  * 
@@ -45,7 +43,6 @@ public abstract class Rule {
 		while(m.find()) {
 			result++;
 		}
-		Log.d("rule", regex + "is present " + result + " times in " + password);
 		return result; 
 	}
 	

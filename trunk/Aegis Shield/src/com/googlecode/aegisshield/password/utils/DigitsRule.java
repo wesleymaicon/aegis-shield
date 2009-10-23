@@ -4,7 +4,6 @@
  */
 package com.googlecode.aegisshield.password.utils;
 
-import android.util.Log;
 
 /**
  * Score:
@@ -26,7 +25,6 @@ public class DigitsRule extends Rule {
 		}else if (digits < 3) {
 			score = 7;
 		}
-		Log.d("digits", "score: " +score);
 		return score;
 	}
 }

@@ -4,7 +4,6 @@
  */
 package com.googlecode.aegisshield.password.utils;
 
-import android.util.Log;
 
 /**
  * Score:
@@ -31,7 +30,6 @@ public class ExtraCharsRule extends Rule {
 		}else if (extraChars > 1) {
 			score = 10;
 		}
-		Log.d("extra chars", "score: "+score);
 		return score;
 	}
 

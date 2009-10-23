@@ -4,7 +4,6 @@
  */
 package com.googlecode.aegisshield.password.utils;
 
-import android.util.Log;
 
 /**
  * Score:
@@ -29,7 +28,6 @@ public class LettersRule extends Rule{
 				score = 7;
 			}
 		}
-		Log.d("Letters", "score: "+score);
 		return score;
 	}
 }
