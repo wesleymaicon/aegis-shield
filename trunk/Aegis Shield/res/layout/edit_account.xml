@@ -18,27 +18,8 @@
 
         <EditText android:id="@+id/account_name_edit"
             android:layout_width="180px" 
-            android:layout_height="wrap_content" />
-    </TableRow>
-    <TableRow>
-        <TextView android:id="@+id/account_user_label"
-            android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
-            android:text="@string/account_user_text" />
-
-        <EditText android:id="@+id/account_user_edit"
-            android:layout_width="180px" 
-            android:layout_height="wrap_content" />
-    </TableRow>
-    <TableRow>
-        <TextView android:id="@+id/account_password_label"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content"
-            android:text="@string/account_password_text" />
-
-        <EditText android:id="@+id/account_password_edit"
-            android:layout_width="180px" 
-            android:layout_height="wrap_content"/>
+            android:singleLine="true" />
     </TableRow>
     <TableRow>
         <TextView android:id="@+id/account_description_label"
@@ -48,9 +29,39 @@
 
         <EditText android:id="@+id/account_description_edit"
             android:layout_width="180px" 
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
     </TableRow>
     <TableRow>
+        <TextView android:id="@+id/account_user_label"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="@string/account_user_text" />
+
+        <EditText android:id="@+id/account_user_edit"
+            android:layout_width="180px" 
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@+id/account_password_label"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="@string/account_password_text" />
+
+        <EditText android:id="@+id/account_password_edit"
+            android:layout_width="180px" 
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+    </TableRow>
+
+    <TableRow>
+    	<Button
+			android:id="@+id/generate_button_edit" 
+			android:text="@string/generate_password_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+			
         <Button android:id="@+id/save_account_button" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

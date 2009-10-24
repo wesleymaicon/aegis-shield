@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
+import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
 import com.googlecode.aegisshield.password.utils.PasswordGenerator;
@@ -87,7 +88,7 @@ public class AddAccountInformation extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				acctPassEdit.setText(PasswordGenerator.getPassword(8));
+				acctPassEdit.setText(PasswordGenerator.getPassword(Constants.GENERATED_PASSWORD_LENGTH));
 			}
 		});
 		
