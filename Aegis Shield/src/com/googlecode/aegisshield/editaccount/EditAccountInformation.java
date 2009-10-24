@@ -8,8 +8,10 @@ package com.googlecode.aegisshield.editaccount;
 import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
+import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
+import com.googlecode.aegisshield.password.utils.PasswordGenerator;
 import com.googlecode.aegisshield.password.utils.PasswordStrength;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
 
@@ -60,6 +62,8 @@ public class EditAccountInformation extends Activity {
 		final EditText userName = (EditText) findViewById(R.id.account_user_edit);
 		final EditText passwd = (EditText) findViewById(R.id.account_password_edit);
 		final EditText description =  (EditText) findViewById(R.id.account_description_edit);
+		final Button generatePassword = (Button) findViewById(R.id.generate_button_edit);
+		
 		accountName.setText(info.getAccountName());
 		userName.setText(info.getUserName());
 		passwd.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
@@ -103,6 +107,15 @@ public class EditAccountInformation extends Activity {
 
 			
         });
+		
+		generatePassword.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				passwd.setText(PasswordGenerator.getPassword(Constants.GENERATED_PASSWORD_LENGTH));
+			} 
+			
+		});
 	}
 	
 	/*
