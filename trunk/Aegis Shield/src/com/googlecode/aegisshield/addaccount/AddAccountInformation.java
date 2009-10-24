@@ -19,6 +19,7 @@ import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
+import com.googlecode.aegisshield.password.utils.PasswordGenerator;
 import com.googlecode.aegisshield.password.utils.PasswordStrength;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
 
@@ -57,6 +58,7 @@ public class AddAccountInformation extends Activity {
 		final EditText acctNameEdit = (EditText) findViewById(R.id.account_name_edit);
 		final EditText acctUserEdit = (EditText) findViewById(R.id.account_user_edit);
 		final EditText acctDescEdit = (EditText) findViewById(R.id.account_description_edit);
+		final Button generatePassword = (Button) findViewById(R.id.generate_button);
 		
 		Intent intent = getIntent();
 		if (ADD_ACCT_INFO_ACTION.equals(intent.getAction())) {
@@ -80,6 +82,14 @@ public class AddAccountInformation extends Activity {
 				return false;
 			}
         });
+		
+		generatePassword.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				acctPassEdit.setText(PasswordGenerator.getPassword(8));
+			}
+		});
 		
 		addAccount.setOnClickListener(new OnClickListener() {
 			/**

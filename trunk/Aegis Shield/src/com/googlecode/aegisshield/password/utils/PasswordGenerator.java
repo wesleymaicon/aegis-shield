@@ -15,6 +15,12 @@ public class PasswordGenerator {
 	
 	private static Random rand = new Random(new Date().getTime());
 	
+	/**
+	 * Generates a password of specified length.
+	 * 
+	 * @param length of the password
+	 * @return String with generated password
+	 */
 	public static String getPassword(int length) {
 		final StringBuffer password = new StringBuffer();
 		for (int i=0; i<length; i++) {

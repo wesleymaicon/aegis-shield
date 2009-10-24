@@ -21,6 +21,17 @@
 			android:layout_height="wrap_content" 
 			android:singleLine="true"/>
 	</TableRow>
+    <TableRow>
+        <TextView android:id="@+id/account_description_label"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:text="@string/account_description_text" />
+
+        <EditText android:id="@+id/account_description_edit"
+            android:layout_width="180px" 
+            android:layout_height="wrap_content" 
+            android:singleLine="true"/>
+    </TableRow>
 	<TableRow>
         <TextView android:id="@+id/account_user_label"
             android:layout_width="wrap_content" 
@@ -44,17 +55,13 @@
             android:singleLine="true"/>
     </TableRow>
     <TableRow>
-        <TextView android:id="@+id/account_description_label"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content"
-            android:text="@string/account_description_text" />
+    	<Button
+			android:id="@+id/generate_button" 
+			android:text="@string/generate_password_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:layout_below="@id/account_password_edit"/>
 
-        <EditText android:id="@+id/account_description_edit"
-            android:layout_width="180px" 
-            android:layout_height="wrap_content" 
-            android:singleLine="true"/>
-    </TableRow>
-    <TableRow>
         <Button android:id="@+id/add_account_button" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
