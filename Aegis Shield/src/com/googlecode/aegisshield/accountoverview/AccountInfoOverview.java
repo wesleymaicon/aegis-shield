@@ -10,14 +10,15 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 
-import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.addaccount.AddAccountInformation;
+import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
 import com.googlecode.aegisshield.editaccount.EditAccountInformation;
@@ -70,16 +71,45 @@ public class AccountInfoOverview extends ListActivity {
 		
 		Intent intent = getIntent();
 		if (ACCT_INFO_OVERVIEW_ACTION.equals(intent.getAction())) {
-			encryptionKey = intent.getExtras().getString(AegisMain.HASHED_PASSWORD);
+			encryptionKey = intent.getExtras().getString(Constants.HASHED_PASSWORD);
 		}
 		
 		// we provide context menus
 		getListView().setOnCreateContextMenuListener(this);
 		
+		
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Log.i("aegis", "AccountInfoOverview.onPause");
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Log.i("aegis", "AccountInfoOverview.onRestart");
+	}
+	
+	/**
+	 * 	Since this method is called on all states of running an activity (new, paused and stopped), we populate
+	 * the list here.
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.i("aegis", "AccountInfoOverview.onResume");
 		//load the items in the list
 		List<AccountInformation> content = new AccountInformationRepository(getContentResolver()).loadAll();
 		acctInfoListAdapter = new AccountInfoAdapter(this, content);
 		setListAdapter(acctInfoListAdapter);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		Log.i("aegis", "AccountInfoOverview.onStart");
 	}
 
 	@Override
@@ -112,7 +142,7 @@ public class AccountInfoOverview extends ListActivity {
 		switch(item.getItemId()) {
 			case R.id.list_add:
 				Intent addIntent = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
-				addIntent.putExtra(AegisMain.HASHED_PASSWORD, encryptionKey);
+				addIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 				startActivity(addIntent);
 				break;
 			case R.id.list_delete:
@@ -125,7 +155,7 @@ public class AccountInfoOverview extends ListActivity {
 	 				AccountInformation info = (AccountInformation) acctInfoListAdapter.getItem(position);
 					Intent editIntent = new Intent(EditAccountInformation.EDIT_ACCT_INFO_ACTION);
 					editIntent.putExtra(ACC_INFO_TO_EDIT_Key, info);
-					editIntent.putExtra(AegisMain.HASHED_PASSWORD, encryptionKey);
+					editIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 					startActivity(editIntent);
 				}
 				break;

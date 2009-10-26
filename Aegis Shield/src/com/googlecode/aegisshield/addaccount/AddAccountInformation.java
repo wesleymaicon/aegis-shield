@@ -15,7 +15,6 @@ import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.domain.AccountInformation;
@@ -63,7 +62,7 @@ public class AddAccountInformation extends Activity {
 		
 		Intent intent = getIntent();
 		if (ADD_ACCT_INFO_ACTION.equals(intent.getAction())) {
-			encryptionKey = intent.getExtras().getString(AegisMain.HASHED_PASSWORD);
+			encryptionKey = intent.getExtras().getString(Constants.HASHED_PASSWORD);
 		} else {
 			//TODO, we should throw a runtime error here, since we cannot do anything much without a password.
 		}
