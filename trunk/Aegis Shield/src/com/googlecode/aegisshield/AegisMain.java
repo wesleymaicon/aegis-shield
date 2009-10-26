@@ -11,15 +11,11 @@ import android.widget.EditText;
 import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
 import com.googlecode.aegisshield.addaccount.AddAccountInformation;
 import com.googlecode.aegisshield.app.utils.ApplicationPreferenceManager;
+import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.security.auth.AuthenticatorService;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
 
 public class AegisMain extends Activity {
-	/**
-	 * 	Intent extra data key for the hashed password.
-	 */
-	public static final String HASHED_PASSWORD = "hashed.password";
-
 	/**
 	 * 	Application preferences manager.
 	 */
@@ -86,7 +82,7 @@ public class AegisMain extends Activity {
 						prefsManager.saveEncryptedSecurityToken(encryptedToken);
 						// we go to the add account screen.
 						Intent addAccount = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
-						addAccount.putExtra(HASHED_PASSWORD, hashedPass);
+						addAccount.putExtra(Constants.HASHED_PASSWORD, hashedPass);
 						startActivity(addAccount);
 					} else {
 						// TODO show dialog
@@ -95,7 +91,7 @@ public class AegisMain extends Activity {
 					boolean authenticated = auth.authenticate(password);
 					if (authenticated) {
 						Intent acctOverview = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
-						acctOverview.putExtra(HASHED_PASSWORD, hashedPass);
+						acctOverview.putExtra(Constants.HASHED_PASSWORD, hashedPass);
 						startActivity(acctOverview);
 					} else { 
 						//TODO show dialog

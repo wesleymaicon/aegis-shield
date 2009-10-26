@@ -5,7 +5,6 @@
  */
 package com.googlecode.aegisshield.editaccount;
 
-import com.googlecode.aegisshield.AegisMain;
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
 import com.googlecode.aegisshield.app.utils.Constants;
@@ -52,7 +51,7 @@ public class EditAccountInformation extends Activity {
 		Intent intent = getIntent();
 		
 		if (EDIT_ACCT_INFO_ACTION.equals(intent.getAction())) {
-			encryptionKey = intent.getExtras().getString(AegisMain.HASHED_PASSWORD);
+			encryptionKey = intent.getExtras().getString(Constants.HASHED_PASSWORD);
 		}
 		
 		final AccountInformation info = (AccountInformation) getIntent().getExtras().getSerializable(
@@ -90,7 +89,7 @@ public class EditAccountInformation extends Activity {
 				
 				acctRepository.update(editedInfo);
 				Intent intent = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
-				intent.putExtra(AegisMain.HASHED_PASSWORD, encryptionKey);
+				intent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 				startActivity(intent);
 			}
 		});
