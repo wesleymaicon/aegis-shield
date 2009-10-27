@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="strength_label_text">Password strength</string>
     <string name="hello">Aegis Shield </string>
     <string name="app_name">Aegis Shield </string>
     <string name="strength_button_text">Password strength </string>
@@ -22,4 +23,10 @@
     <string name="login_password_text">Password </string>
     <string name="login_passwordcheck_text">Check password </string>
     <string name="login_button_text">Login </string>
+	<string-array name="password_strength">
+		<item>Weak</item>
+		<item>Good</item>
+		<item>Strong</item>
+	</string-array>
+<color name="black">#000</color>
 </resources>
