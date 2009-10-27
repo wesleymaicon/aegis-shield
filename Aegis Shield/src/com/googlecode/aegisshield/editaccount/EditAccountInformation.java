@@ -16,18 +16,8 @@
  */
 package com.googlecode.aegisshield.editaccount;
 
-import com.googlecode.aegisshield.R;
-import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
-import com.googlecode.aegisshield.app.utils.Constants;
-import com.googlecode.aegisshield.domain.AccountInformation;
-import com.googlecode.aegisshield.domain.AccountInformationRepository;
-import com.googlecode.aegisshield.password.utils.PasswordGenerator;
-import com.googlecode.aegisshield.password.utils.PasswordStrength;
-import com.googlecode.aegisshield.security.crypto.CryptoService;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -35,6 +25,17 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.googlecode.aegisshield.R;
+import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
+import com.googlecode.aegisshield.app.utils.Constants;
+import com.googlecode.aegisshield.app.utils.CustomGradient;
+import com.googlecode.aegisshield.domain.AccountInformation;
+import com.googlecode.aegisshield.domain.AccountInformationRepository;
+import com.googlecode.aegisshield.password.utils.PasswordGenerator;
+import com.googlecode.aegisshield.password.utils.PasswordStrength;
+import com.googlecode.aegisshield.security.crypto.CryptoService;
 
 /**
  *	Edit and save account information.
@@ -52,6 +53,10 @@ public class EditAccountInformation extends Activity {
 	 */
 	private String encryptionKey = "";
 	
+	/**
+	 * non-linear gradient.
+	 */
+	private CustomGradient gradient = new CustomGradient();
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -73,11 +78,12 @@ public class EditAccountInformation extends Activity {
 		final EditText passwd = (EditText) findViewById(R.id.account_password_edit);
 		final EditText description =  (EditText) findViewById(R.id.account_description_edit);
 		final Button generatePassword = (Button) findViewById(R.id.generate_button_edit);
+		final TextView passStrength = (TextView) findViewById(R.id.password_strength);
 		
 		accountName.setText(info.getAccountName());
 		userName.setText(info.getUserName());
 		passwd.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
-		verifyPwd(passwd);
+		verifyPwd(passwd.getText().toString(),passStrength);
 		description.setText(info.getDescription());
 		
 		Button saveEdits = (Button) findViewById(R.id.save_account_button);
@@ -110,7 +116,7 @@ public class EditAccountInformation extends Activity {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if(event.getAction() == KeyEvent.ACTION_UP) {
-					verifyPwd(passwd);
+					verifyPwd(passwd.getText().toString(),passStrength);
 				}
 				return false;
 			}
@@ -131,12 +137,18 @@ public class EditAccountInformation extends Activity {
 	/*
 	 * Changes the color of the password according to its strength
 	 */
-	private void verifyPwd(final EditText passwd) {
-		int strength = PasswordStrength.evaluate(passwd.getText().toString());
+	private void verifyPwd(String passwd, final TextView pwdStrength) {
+		int strength = PasswordStrength.evaluate(passwd);
+		CharSequence[] strengthLabels = getResources().getTextArray(R.array.password_strength);
 		if(strength >= 8) {
-			passwd.setTextColor(Color.GREEN);
+			pwdStrength.setText(strengthLabels[2]);
+		}else if (strength >= 5){
+			pwdStrength.setText(strengthLabels[1]);
 		}else {
-			passwd.setTextColor(Color.RED);
+			pwdStrength.setText(strengthLabels[0]);
 		}
+		
+		gradient.moveCenter(1 - (float) strength/10);
+		pwdStrength.setBackgroundDrawable(gradient);
 	}
 }
