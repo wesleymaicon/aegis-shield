@@ -90,29 +90,21 @@ public class AddAccountInformation extends Activity {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if(event.getAction() == KeyEvent.ACTION_UP) {
-					int strength = PasswordStrength.evaluate(acctPassEdit.getText().toString());
-					CharSequence[] strengthLabels = getResources().getTextArray(R.array.password_strength);
-					if(strength >= 8) {
-						passStrength.setText(strengthLabels[2]);
-					}else if (strength >= 5){
-						passStrength.setText(strengthLabels[1]);
-					}else {
-						passStrength.setText(strengthLabels[0]);
-					}
-					
-					gradient.moveCenter(1 - (float) strength/10);
-					passStrength.setBackgroundDrawable(gradient);
-					
+					verifyPassword(acctPassEdit.getText().toString(), passStrength);
 				}
 				return false;
 			}
+
+			
         });
 		
 		generatePassword.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				acctPassEdit.setText(PasswordGenerator.getPassword(Constants.GENERATED_PASSWORD_LENGTH));
+				String genPwd = PasswordGenerator.getPassword(Constants.GENERATED_PASSWORD_LENGTH);
+				acctPassEdit.setText(genPwd);
+				verifyPassword(genPwd, passStrength);
 			}
 		});
 		
@@ -169,4 +161,18 @@ public class AddAccountInformation extends Activity {
 		});
 	}
 	
+	private void verifyPassword(String password, final TextView passStrength) {
+		int strength = PasswordStrength.evaluate(password);
+		CharSequence[] strengthLabels = getResources().getTextArray(R.array.password_strength);
+		if(strength >= 8) {
+			passStrength.setText(strengthLabels[2]);
+		}else if (strength >= 5){
+			passStrength.setText(strengthLabels[1]);
+		}else {
+			passStrength.setText(strengthLabels[0]);
+		}
+		
+		gradient.moveCenter(1 - (float) strength/10);
+		passStrength.setBackgroundDrawable(gradient);
+	}
 }

@@ -128,7 +128,9 @@ public class EditAccountInformation extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				passwd.setText(PasswordGenerator.getPassword(Constants.GENERATED_PASSWORD_LENGTH));
+				String genPwd = PasswordGenerator.getPassword(Constants.GENERATED_PASSWORD_LENGTH); 
+				passwd.setText(genPwd);
+				verifyPwd(genPwd, passStrength);
 			} 
 			
 		});
