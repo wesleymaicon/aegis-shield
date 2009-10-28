@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="reveal_pwd_message">Tap and hold to reveal</string>
     <string name="strength_label_text">Password strength</string>
     <string name="hello">Aegis Shield </string>
     <string name="app_name">Aegis Shield </string>
     <string name="strength_button_text">Password strength </string>
     <string name="verify_password_text">Verify password strength </string>
     <string name="back_button_text">Back </string>
-    
     <string name="generate_password_text">Generate password </string>
     <string name="account_overview_text">Account overview </string>
     <string name="add_account_button_text">Create account </string>
@@ -28,5 +28,11 @@
 		<item>Good</item>
 		<item>Strong</item>
 	</string-array>
-<color name="black">#000</color>
+	<color name="black">#000</color>
+	<style name="customViewText">
+		<item name="android:background">@android:drawable/edit_text</item>
+		<item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+		<item name="android:textColor">@android:color/primary_text_light</item>
+		<item name="android:gravity">center_vertical</item>
+	</style>
 </resources>

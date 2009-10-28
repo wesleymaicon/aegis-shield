@@ -49,10 +49,21 @@
             android:layout_height="wrap_content"
             android:text="@string/account_password_text" />
 
-        <EditText android:id="@+id/account_password_edit"
-            android:layout_width="180px" 
-            android:layout_height="wrap_content"
-            android:singleLine="true" />
+        <TextSwitcher android:id="@+id/TextSwitcher01" 
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content">
+        	
+			<TextView android:id="@+id/TextView03" 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/reveal_pwd_message"
+				android:textSize="16sp"
+				style="@style/customViewText" />
+			<EditText android:id="@+id/account_password_edit"
+				android:layout_width="180px"
+				android:layout_height="wrap_content"
+				android:singleLine="true" />
+		</TextSwitcher>
     </TableRow>
 	<TableRow>
 		<TextView android:id="@+id/TextView01" 
@@ -77,4 +88,5 @@
             android:layout_height="wrap_content"
             android:text="@string/save_account_button_text" />
     </TableRow>
+
 </TableLayout>

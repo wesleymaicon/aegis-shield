@@ -23,8 +23,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnLongClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.googlecode.aegisshield.R;
@@ -57,6 +61,9 @@ public class EditAccountInformation extends Activity {
 	 * non-linear gradient.
 	 */
 	private CustomGradient gradient = new CustomGradient();
+	
+	TextSwitcher txtSwitcher;
+	AccountInformation info;
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -70,7 +77,7 @@ public class EditAccountInformation extends Activity {
 			encryptionKey = intent.getExtras().getString(Constants.HASHED_PASSWORD);
 		}
 		
-		final AccountInformation info = (AccountInformation) getIntent().getExtras().getSerializable(
+		info = (AccountInformation) getIntent().getExtras().getSerializable(
 				AccountInfoOverview.ACC_INFO_TO_EDIT_Key);
 		// populate the edit info activity fields
 		final EditText accountName = (EditText) findViewById(R.id.account_name_edit);
@@ -133,6 +140,20 @@ public class EditAccountInformation extends Activity {
 				verifyPwd(genPwd, passStrength);
 			} 
 			
+		});
+		
+		txtSwitcher = (TextSwitcher) findViewById(R.id.TextSwitcher01);
+		Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+		Animation out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
+		txtSwitcher.setInAnimation(in);
+		txtSwitcher.setOutAnimation(out);
+		txtSwitcher.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				txtSwitcher.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
+				return false;
+			}
 		});
 	}
 	
