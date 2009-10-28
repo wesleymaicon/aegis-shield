@@ -22,10 +22,14 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.ContextMenu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.addaccount.AddAccountInformation;
@@ -76,19 +80,42 @@ public class AccountInfoOverview extends ListActivity {
 		}
 	}
 	
+	/**
+	 * 	Obvious, ain't it?
+	 */
+	private void addListItem() {
+		Intent addIntent = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
+		addIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
+		startActivity(addIntent);
+	}
+	
+	/**
+	 * 	What to do when the user hits the add button, oh what to do?
+	 */
+	private void onAddButtonClick() {
+		Button add = (Button) findViewById(R.id.add_acct_info_button);
+		
+		add.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addListItem();
+			}
+		});
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.account_overview);
 		
 		Intent intent = getIntent();
 		if (ACCT_INFO_OVERVIEW_ACTION.equals(intent.getAction())) {
 			encryptionKey = intent.getExtras().getString(Constants.HASHED_PASSWORD);
 		}
 		
-		// we provide context menus
-		getListView().setOnCreateContextMenuListener(this);
-		
-		
+		registerForContextMenu(getListView());
+		onAddButtonClick();
 	}
 
 	@Override
@@ -122,59 +149,48 @@ public class AccountInfoOverview extends ListActivity {
 		super.onStart();
 		Log.i("aegis", "AccountInfoOverview.onStart");
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.overview_list_menu, menu);
-	    return true;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		int position = getListView().getSelectedItemPosition();
+	public void onCreateContextMenu(ContextMenu menu, View view,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, view, menuInfo);
+		AccountInformation acctInfo = (AccountInformation) getListAdapter().getItem(
+				((AdapterContextMenuInfo) menuInfo).position);
 		
-		menu.findItem(R.id.list_add).setVisible(true);
-		menu.findItem(R.id.list_edit).setVisible(position != AdapterView.INVALID_POSITION);
-		menu.findItem(R.id.list_delete).setVisible(position != AdapterView.INVALID_POSITION);
-		
-		return true;
-	}
-	/**
-	 * 	Reacts on users clicking on menu items.
-	 * 
-	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		boolean handled = false;
-		int position = getListView().getSelectedItemPosition();
-		
-		switch(item.getItemId()) {
-			case R.id.list_add:
-				Intent addIntent = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
-				addIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
-				startActivity(addIntent);
-				break;
-			case R.id.list_delete:
-				if (AdapterView.INVALID_POSITION != position) {
-					deleteListItem(position);
-				}
-				break;
-			case R.id.list_edit:
-				if (AdapterView.INVALID_POSITION != position) {
-	 				AccountInformation info = (AccountInformation) acctInfoListAdapter.getItem(position);
-					Intent editIntent = new Intent(EditAccountInformation.EDIT_ACCT_INFO_ACTION);
-					editIntent.putExtra(ACC_INFO_TO_EDIT_Key, info);
-					editIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
-					startActivity(editIntent);
-				}
-				break;
-			default:
-				break;
-		}
-		
-		return handled;
+		menu.add(0, R.id.list_add, 0, getResources().getString(R.string.add_account_text));
+		if (acctInfo != null) {
+			menu.add(0, R.id.list_edit, 0, getResources().getString(R.string.edit_account_text));
+			menu.add(0, R.id.list_delete, 0, getResources().getString(R.string.delete_account_text));
+		} 
 	}
 	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		AccountInformation acctInfo = (AccountInformation) getListAdapter().getItem(menuInfo.position);
+		
+		switch (item.getItemId()) {
+		case R.id.list_add:
+			addListItem();
+			break;
+		case R.id.list_delete:
+			if (AdapterView.INVALID_POSITION != menuInfo.position) {
+				deleteListItem(menuInfo.position);
+			}
+			break;
+		case R.id.list_edit:
+			if (AdapterView.INVALID_POSITION != menuInfo.position) {
+				Intent editIntent = new Intent(EditAccountInformation.EDIT_ACCT_INFO_ACTION);
+				editIntent.putExtra(ACC_INFO_TO_EDIT_Key, acctInfo);
+				editIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
+				startActivity(editIntent);
+			}
+			break;
+		default:
+			break;
+		}
+		
+		return super.onContextItemSelected(item);
+	}
+
 }
