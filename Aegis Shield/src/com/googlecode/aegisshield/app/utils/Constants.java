@@ -18,12 +18,27 @@ package com.googlecode.aegisshield.app.utils;
 
 public class Constants {
 	/**
-	 * 	Generated password length.
+	 * Generated password length.
 	 */
 	public static final int GENERATED_PASSWORD_LENGTH = 8;
-	
+
 	/**
-	 * 	Intent extra data key for the hashed password.
+	 * Intent extra data key for the hashed password.
 	 */
 	public static final String HASHED_PASSWORD = "hashed.password";
+
+	/**
+	 * The number of digits to use in a generated password.
+	 */
+	public static final int GENERATED_PASSWORD_DIGITS = 4;
+
+	/**
+	 * The number of upper characters to use in a generated password.
+	 */
+	public static final int GENERATED_PASSWORD_UPPER = 1;
+
+	/**
+	 * The number of extra characters to use in a generated password.
+	 */
+	public static final int GENERATED_PASSWORD_EXTRAS = 2;
 }
