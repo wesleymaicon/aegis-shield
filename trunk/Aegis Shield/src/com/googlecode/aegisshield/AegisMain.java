@@ -106,6 +106,7 @@ public class AegisMain extends Activity {
 						Intent addAccount = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
 						addAccount.putExtra(Constants.HASHED_PASSWORD, hashedPass);
 						startActivity(addAccount);
+						finish();
 					} else {
 						// TODO show dialog
 					}
@@ -115,6 +116,7 @@ public class AegisMain extends Activity {
 						Intent acctOverview = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
 						acctOverview.putExtra(Constants.HASHED_PASSWORD, hashedPass);
 						startActivity(acctOverview);
+						finish();
 					} else { 
 						//TODO show dialog
 					}

@@ -115,6 +115,7 @@ public class EditAccountInformation extends Activity {
 				Intent intent = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
 				intent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 				startActivity(intent);
+				finish();
 			}
 		});
 		

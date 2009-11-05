@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.googlecode.aegisshield.R;
+import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
 import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.app.utils.CustomGradient;
 import com.googlecode.aegisshield.domain.AccountInformation;
@@ -84,6 +85,8 @@ public class AddAccountInformation extends Activity {
 		} else {
 			//TODO, we should throw a runtime error here, since we cannot do anything much without a password.
 		}
+		
+		navigateToOverview();
 		
 		//register password strength check
 		acctPassEdit.setOnKeyListener(new OnKeyListener() {
@@ -157,6 +160,24 @@ public class AddAccountInformation extends Activity {
 					acctDescEdit.setText("");
 					
 				}
+			}
+		});
+	}
+	
+	/**
+	 * 	Navigate back to the overview screen.
+	 */
+	private void navigateToOverview() {
+		Button overview = (Button) findViewById(R.id.overview_button);
+		
+		overview.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent acctOverview = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
+				acctOverview.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
+				startActivity(acctOverview);
+				finish();
 			}
 		});
 	}
