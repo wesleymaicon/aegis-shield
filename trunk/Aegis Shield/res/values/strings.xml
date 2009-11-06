@@ -25,6 +25,7 @@
     <string name="login_password_text">Password </string>
     <string name="login_passwordcheck_text">Check Password </string>
     <string name="login_button_text">Login </string>
+    <string name="exit_button_text">Exit Application </string>
 	<string-array name="password_strength">
 		<item>Weak</item>
 		<item>Good</item>

@@ -87,6 +87,7 @@ public class AccountInfoOverview extends ListActivity {
 		Intent addIntent = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
 		addIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 		startActivity(addIntent);
+		finish();
 	}
 	
 	/**
@@ -104,6 +105,22 @@ public class AccountInfoOverview extends ListActivity {
 		});
 	}
 	
+	/**
+	 * 	What to do when the user hits the exit button.
+	 */
+	private void onExitButtonClick() {
+		Button add = (Button) findViewById(R.id.exit_button);
+		
+		add.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+	}
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -116,6 +133,7 @@ public class AccountInfoOverview extends ListActivity {
 		
 		registerForContextMenu(getListView());
 		onAddButtonClick();
+		onExitButtonClick();
 	}
 
 	@Override
@@ -184,6 +202,7 @@ public class AccountInfoOverview extends ListActivity {
 				editIntent.putExtra(ACC_INFO_TO_EDIT_Key, acctInfo);
 				editIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 				startActivity(editIntent);
+				finish();
 			}
 			break;
 		default:
