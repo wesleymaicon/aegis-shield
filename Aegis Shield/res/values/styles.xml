@@ -18,6 +18,15 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
     
+    <style name="ContentWrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="LayoutVerticalWrap" parent="@style/ContentHorizontal">
+        <item name="android:orientation">vertical</item>
+    </style>
+    
     <style name="LayoutHorizontalFill" parent="@style/ContentHorizontal">
         <item name="android:orientation">horizontal</item>
         <item name="android:paddingBottom">3sp</item>

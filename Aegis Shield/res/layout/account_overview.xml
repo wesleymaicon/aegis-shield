@@ -7,9 +7,16 @@
         android:layout_height="fill_parent"
         android:layout_weight="1" />
     
-    <Button android:id="@+id/add_acct_info_button" 
-        android:text="@string/add_account_text"
-        android:layout_weight="0" 
-        style="@style/ButtonFullScreen"/>
+    <LinearLayout style="@style/LayoutVerticalWrap"
+        android:layout_weight="0">
+        
+        <Button android:id="@+id/add_acct_info_button" 
+            android:text="@string/add_account_text"
+            style="@style/ButtonFullScreen"/>
+            
+        <Button android:id="@+id/exit_button" 
+            android:text="@string/exit_button_text"
+            style="@style/ButtonFullScreen"/>
+    </LinearLayout>
 
 </LinearLayout>
