@@ -18,8 +18,8 @@ package com.googlecode.aegisshield.security.auth;
 
 import android.content.Context;
 
-import com.googlecode.aegisshield.app.utils.ApplicationPreferenceManager;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
+import com.googlecode.aegisshield.utils.app.ApplicationPreferenceManager;
 
 
 /**

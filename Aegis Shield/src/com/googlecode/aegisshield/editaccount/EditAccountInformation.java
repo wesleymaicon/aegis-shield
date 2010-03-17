@@ -33,13 +33,13 @@ import android.widget.TextView;
 
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
-import com.googlecode.aegisshield.app.utils.Constants;
-import com.googlecode.aegisshield.app.utils.CustomGradient;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
 import com.googlecode.aegisshield.password.utils.PasswordGenerator;
 import com.googlecode.aegisshield.password.utils.PasswordStrength;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
+import com.googlecode.aegisshield.utils.app.Constants;
+import com.googlecode.aegisshield.utils.ui.CustomGradient;
 
 /**
  *	Edit and save account information.

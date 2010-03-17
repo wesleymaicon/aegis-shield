@@ -26,10 +26,11 @@ import android.widget.EditText;
 
 import com.googlecode.aegisshield.accountoverview.AccountInfoOverview;
 import com.googlecode.aegisshield.addaccount.AddAccountInformation;
-import com.googlecode.aegisshield.app.utils.ApplicationPreferenceManager;
-import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.security.auth.AuthenticatorService;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
+import com.googlecode.aegisshield.utils.app.ApplicationPreferenceManager;
+import com.googlecode.aegisshield.utils.app.Constants;
+import com.googlecode.aegisshield.utils.ui.Alerts;
 
 /**
  * 	Main activity of the application. Will present the user with a login screen and accept a master password, doing
@@ -108,7 +109,7 @@ public class AegisMain extends Activity {
 						startActivity(addAccount);
 						finish();
 					} else {
-						// TODO show dialog
+						Alerts.showAlert(getString(R.string.message_alert_pass_match), getApplicationContext());
 					}
 				} else {
 					boolean authenticated = auth.authenticate(password);
@@ -118,7 +119,7 @@ public class AegisMain extends Activity {
 						startActivity(acctOverview);
 						finish();
 					} else { 
-						//TODO show dialog
+						Alerts.showAlert(getString(R.string.message_alert_invalid_pass), getApplicationContext());
 					}
 				}
 				
