@@ -33,10 +33,10 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.googlecode.aegisshield.R;
 import com.googlecode.aegisshield.addaccount.AddAccountInformation;
-import com.googlecode.aegisshield.app.utils.Constants;
 import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
 import com.googlecode.aegisshield.editaccount.EditAccountInformation;
+import com.googlecode.aegisshield.utils.app.Constants;
 
 /**
  * 	Activity for displaying all account information in a list. It will have the proper menus for adding,

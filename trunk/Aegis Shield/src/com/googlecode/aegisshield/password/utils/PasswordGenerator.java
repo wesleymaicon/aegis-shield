@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-import com.googlecode.aegisshield.app.utils.Constants;
+import com.googlecode.aegisshield.utils.app.Constants;
 
 /**
  * Utility class for generating passwords.
