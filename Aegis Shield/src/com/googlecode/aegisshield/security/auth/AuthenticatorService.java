@@ -16,8 +16,12 @@
  */
 package com.googlecode.aegisshield.security.auth;
 
-import android.content.Context;
+import java.util.logging.LoggingPermission;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.googlecode.aegisshield.security.crypto.CannotDecryptCheckTextException;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
 import com.googlecode.aegisshield.utils.app.ApplicationPreferenceManager;
 
@@ -62,7 +66,12 @@ public class AuthenticatorService {
 		ApplicationPreferenceManager prefsManager = new ApplicationPreferenceManager(context);
 		String clearToken = prefsManager.loadClearSecurityToken();
 		String encryptedToken = prefsManager.loadEncryptedSecurityToken();
-		String decryptedToken = CryptoService.decrypt(encryptedToken, password);
+		String decryptedToken = "";
+		try {
+			decryptedToken = CryptoService.decrypt(encryptedToken, password);
+		} catch (CannotDecryptCheckTextException e) {
+			Log.w("aegis", e);
+		}
 		
 		if (clearToken.equals(decryptedToken)) {
 			auth = true;

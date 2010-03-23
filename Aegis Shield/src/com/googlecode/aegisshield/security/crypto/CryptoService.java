@@ -194,13 +194,18 @@ public final class CryptoService {
 	
 	/**
 	 *  Decrypts a given string. The string to be decrypted must be hex encoded, otherwise the method won't work.
-	 * This should always be used with the output of the encrypt method, which returns a hex encoded encrypted string.  
+	 * This should always be used with the output of the encrypt method, which returns a hex encoded encrypted string.
+	 * 	This method throws a CannodDecryptCheckTextException in most cases when the given password key is invalid. 
+	 * According to the way encryption/decryption is implemented, the BadPaddingException occurs if the private encryption
+	 * key with which you try to decrypt data is invalid. However, in some freak cases the data may be decrypted so
+	 * extra checks are needed to see if the decryption result is rubbish or not.
 	 * 
 	 * @param encData
 	 * @param password
 	 * @return
+	 * @throws CannotDecryptCheckTextException this exception occurs in most cases when the key is invalid.
 	 */
-	public static String decrypt(String encData, String password) {
+	public static String decrypt(String encData, String password) throws CannotDecryptCheckTextException {
 		byte[] decrypted = new byte[] {};
 		Cipher cipher = initCipher(Cipher.DECRYPT_MODE, password);
 		
@@ -211,7 +216,7 @@ public final class CryptoService {
 			throw new CryptoServiceException(e);
 		} catch (BadPaddingException e) {
 			Log.e("aegis", e.getMessage());
-			throw new CryptoServiceException(e);
+			throw new CannotDecryptCheckTextException(e);
 		}
 		
 		return new String(decrypted);

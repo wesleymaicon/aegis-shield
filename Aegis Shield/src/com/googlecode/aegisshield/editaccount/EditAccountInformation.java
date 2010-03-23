@@ -19,6 +19,7 @@ package com.googlecode.aegisshield.editaccount;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,8 +38,10 @@ import com.googlecode.aegisshield.domain.AccountInformation;
 import com.googlecode.aegisshield.domain.AccountInformationRepository;
 import com.googlecode.aegisshield.password.utils.PasswordGenerator;
 import com.googlecode.aegisshield.password.utils.PasswordStrength;
+import com.googlecode.aegisshield.security.crypto.CannotDecryptCheckTextException;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
 import com.googlecode.aegisshield.utils.app.Constants;
+import com.googlecode.aegisshield.utils.ui.Alerts;
 import com.googlecode.aegisshield.utils.ui.CustomGradient;
 
 /**
@@ -89,7 +92,13 @@ public class EditAccountInformation extends Activity {
 		
 		accountName.setText(info.getAccountName());
 		userName.setText(info.getUserName());
-		passwd.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
+		try {
+			passwd.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
+		} catch (CannotDecryptCheckTextException e) {
+			//situation should not occur normally, but if it does a message should be given to the user.
+			Log.e("aegis", "encryption key or data invalid", e);
+			Alerts.showAlert(getString(R.string.message_alert_corrupted_account), returnSelf());
+		}
 		verifyPwd(passwd.getText().toString(),passStrength);
 		description.setText(info.getDescription());
 		
@@ -104,18 +113,37 @@ public class EditAccountInformation extends Activity {
 			public void onClick(View v) {
 				AccountInformationRepository acctRepository = 
 						new AccountInformationRepository(getContentResolver());
-				AccountInformation editedInfo = new AccountInformation();
-				editedInfo.setId(info.getId());
-				editedInfo.setAccountName(accountName.getText().toString());
-				editedInfo.setUserName(userName.getText().toString());
-				editedInfo.setPassword(CryptoService.encrypt(passwd.getText().toString(), encryptionKey));
-				editedInfo.setDescription(description.getText().toString());
 				
-				acctRepository.update(editedInfo);
-				Intent intent = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
-				intent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
-				startActivity(intent);
-				finish();
+				String acctName = accountName.getText().toString();
+				String acctUser = userName.getText().toString();
+				String acctPass = passwd.getText().toString();
+				boolean emptyField = false;
+				if (acctName == null || "".equals(acctName.trim())) {
+					emptyField = true;
+				}
+				if (acctUser == null || "".equals(acctUser.trim())) {
+					emptyField = true;
+				}
+				if (acctPass == null || "".equals(acctPass.trim())) {
+					emptyField = true;
+				}
+				
+				if (emptyField) {
+					Alerts.showAlert(getString(R.string.message_alert_empty_fields), returnSelf());
+				} else {
+					AccountInformation editedInfo = new AccountInformation();
+					editedInfo.setId(info.getId());
+					editedInfo.setAccountName(acctName);
+					editedInfo.setUserName(acctUser);
+					editedInfo.setPassword(CryptoService.encrypt(acctPass, encryptionKey));
+					editedInfo.setDescription(description.getText().toString());
+					
+					acctRepository.update(editedInfo);
+					Intent intent = new Intent(AccountInfoOverview.ACCT_INFO_OVERVIEW_ACTION);
+					intent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
+					startActivity(intent);
+					finish();
+				}
 			}
 		});
 		
@@ -152,7 +180,13 @@ public class EditAccountInformation extends Activity {
 			
 			@Override
 			public boolean onLongClick(View v) {
-				txtSwitcher.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
+				try {
+					txtSwitcher.setText(CryptoService.decrypt(info.getPassword(), encryptionKey));
+				} catch (CannotDecryptCheckTextException e) {
+					//situation should not occur normally, but if it does a message should be given to the user.
+					Log.e("aegis", "encryption key or data invalid", e);
+					Alerts.showAlert(getString(R.string.message_alert_corrupted_account), returnSelf());
+				}
 				return false;
 			}
 		});
@@ -174,5 +208,13 @@ public class EditAccountInformation extends Activity {
 		
 		gradient.moveCenter(1 - (float) strength/10);
 		pwdStrength.setBackgroundDrawable(gradient);
+	}
+	
+	/**
+	 * The activity returns itself privately, for the dialogs that need it.
+	 * @return
+	 */
+	private Activity returnSelf() {
+		return this;
 	}
 }

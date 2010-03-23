@@ -80,6 +80,15 @@ public class AegisMain extends Activity {
     }
     
     /**
+     * The acivity returns itself.
+     * 
+     * @return
+     */
+    private Activity returnActivity() {
+    	return this;
+    }
+    
+    /**
      * 	Method to be called when the user logs in the application.
      * 
      */
@@ -109,7 +118,7 @@ public class AegisMain extends Activity {
 						startActivity(addAccount);
 						finish();
 					} else {
-						Alerts.showAlert(getString(R.string.message_alert_pass_match), getApplicationContext());
+						Alerts.showAlert(getString(R.string.message_alert_pass_match), returnActivity());
 					}
 				} else {
 					boolean authenticated = auth.authenticate(password);
@@ -118,8 +127,8 @@ public class AegisMain extends Activity {
 						acctOverview.putExtra(Constants.HASHED_PASSWORD, hashedPass);
 						startActivity(acctOverview);
 						finish();
-					} else { 
-						Alerts.showAlert(getString(R.string.message_alert_invalid_pass), getApplicationContext());
+					} else {
+						Alerts.showAlert(getString(R.string.message_alert_invalid_pass), returnActivity());
 					}
 				}
 				

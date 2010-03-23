@@ -35,6 +35,7 @@ import com.googlecode.aegisshield.password.utils.PasswordGenerator;
 import com.googlecode.aegisshield.password.utils.PasswordStrength;
 import com.googlecode.aegisshield.security.crypto.CryptoService;
 import com.googlecode.aegisshield.utils.app.Constants;
+import com.googlecode.aegisshield.utils.ui.Alerts;
 import com.googlecode.aegisshield.utils.ui.CustomGradient;
 
 /**
@@ -47,11 +48,6 @@ public class AddAccountInformation extends Activity {
 	 * 	Intent action for the AddAccountInformation activity.
 	 */
 	public static final String ADD_ACCT_INFO_ACTION = "com.googlecode.aegisshield.action.ADD_ACCT_INFO_ACTION";
-	
-	/**
-	 * 	Constant for not available strings.
-	 */
-	private static final String N_A = "n/a";
 	
 	/**
 	 * 	Encryption key, coming from the calling intent - this is the master password, used to encrypt password data.
@@ -132,36 +128,45 @@ public class AddAccountInformation extends Activity {
 					String acctPass = acctPassEdit.getText().toString();
 					String acctDesc = acctDescEdit.getText().toString();
 					
-					//TODO add some validation code, and return a proper message if fields are not filled.
+					boolean emptyField = false;
 					if (acctName == null || "".equals(acctName.trim())) {
-						acctName = N_A;
+						emptyField = true;
 					}
 					if (acctUser == null || "".equals(acctUser.trim())) {
-						acctUser = N_A;
+						emptyField = true;
 					}
 					if (acctPass == null || "".equals(acctPass.trim())) {
-						acctPass = N_A;
-					}
-					if (acctDesc == null || "".equals(acctDesc.trim())) {
-						acctDesc = N_A;
+						emptyField = true;
 					}
 					
-					acctInformation.setAccountName(acctName);
-					acctInformation.setUserName(acctUser);
-					acctInformation.setPassword(CryptoService.encrypt(acctPass, encryptionKey));
-					acctInformation.setDescription(acctDesc);
-					
-					acctRepository.save(acctInformation);
-					
-					// empty the controls...
-					acctNameEdit.setText("");
-					acctUserEdit.setText("");
-					acctPassEdit.setText("");
-					acctDescEdit.setText("");
-					
+					if (emptyField) {
+						Alerts.showAlert(getString(R.string.message_alert_empty_fields), returnSelf());
+					} else {
+						acctInformation.setAccountName(acctName);
+						acctInformation.setUserName(acctUser);
+						acctInformation.setPassword(CryptoService.encrypt(acctPass, encryptionKey));
+						acctInformation.setDescription(acctDesc);
+						
+						acctRepository.save(acctInformation);
+						
+						// empty the controls...
+						acctNameEdit.setText("");
+						acctUserEdit.setText("");
+						acctPassEdit.setText("");
+						acctDescEdit.setText("");
+					}
 				}
 			}
 		});
+	}
+	
+	/**
+	 * Activity returns itself privately to use in alert dialogs.
+	 * 
+	 * @return
+	 */
+	private Activity returnSelf() {
+		return this;
 	}
 	
 	/**
