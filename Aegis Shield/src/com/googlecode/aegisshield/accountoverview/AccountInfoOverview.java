@@ -87,7 +87,7 @@ public class AccountInfoOverview extends ListActivity {
 		Intent addIntent = new Intent(AddAccountInformation.ADD_ACCT_INFO_ACTION);
 		addIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 		startActivity(addIntent);
-		finish();
+//		finish();
 	}
 	
 	/**
@@ -115,6 +115,7 @@ public class AccountInfoOverview extends ListActivity {
 			
 			@Override
 			public void onClick(View v) {
+				//TODO see if all activities can be closed, or don't use this option anymore.
 				finish();
 			}
 		});
@@ -202,7 +203,7 @@ public class AccountInfoOverview extends ListActivity {
 				editIntent.putExtra(ACC_INFO_TO_EDIT_Key, acctInfo);
 				editIntent.putExtra(Constants.HASHED_PASSWORD, encryptionKey);
 				startActivity(editIntent);
-				finish();
+//				finish();
 			}
 			break;
 		default:
