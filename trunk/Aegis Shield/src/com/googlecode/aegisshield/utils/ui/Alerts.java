@@ -16,13 +16,13 @@
  */
 package com.googlecode.aegisshield.utils.ui;
 
-import com.googlecode.aegisshield.R;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+
+import com.googlecode.aegisshield.R;
 
 /**
  *	Utility class for displaying alerts and dialogs. Since it is an utility class, it cannot be instantiated nor
@@ -44,9 +44,11 @@ public final class Alerts {
 	 * @param message the message to be displayed in the dialog.
 	 * @param context the Android content context.
 	 */
-	public static void showAlert(String message, Context context) {
-		Builder builder = new Builder(context);
+	public static void showAlert(String message, Activity activity) {
+		Builder builder = new Builder(activity);
 		builder.setTitle(R.string.alert_window);
+		builder.setMessage(message);
+		builder.setCancelable(false);
 		builder.setPositiveButton(R.string.alert_ok_button, new OnClickListener() {
 			
 			@Override
@@ -56,7 +58,6 @@ public final class Alerts {
 		});
 		
 		AlertDialog alert = builder.create();
-		alert.setMessage(message);
 		alert.show();
 	}
 }

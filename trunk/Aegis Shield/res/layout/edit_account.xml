@@ -16,6 +16,7 @@
             style="@style/WeightedLabel" />
 
         <EditText android:id="@+id/account_name_edit"
+            android:hint="@string/hint_fill_account_name"
             style="@style/WeightedEdit" />
     </LinearLayout>
     
@@ -34,6 +35,7 @@
             style="@style/WeightedLabel" />
 
         <EditText android:id="@+id/account_user_edit"
+            android:hint="@string/hint_fill_user_name"
             style="@style/WeightedEdit" />
     </LinearLayout>
     
@@ -50,6 +52,7 @@
 				style="@style/CustomViewText" />
                 
 			<EditText android:id="@+id/account_password_edit"
+                android:hint="@string/hint_fill_password"
 				android:singleLine="true" 
                 style="@style/ContentHorizontal" />
 		</TextSwitcher>
